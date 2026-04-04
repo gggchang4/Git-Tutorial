@@ -428,23 +428,745 @@ flowchart LR
 
 ## 4. 分支管理与协作
 
-本章节暂保留结构，后续将补齐 `branch`、`switch`、`checkout`、`merge`、`rebase`、`stash` 等内容，以及基础协作工作流。
+### 模块目标
+
+- 理解分支在 Git 中的核心作用
+- 掌握 `branch`、`switch`、`checkout`、`merge`、`rebase`、`stash` 的基础用法
+- 建立“功能分支开发 -> 合并回主线”的基本工作流认知
+- 知道 `merge` 和 `rebase` 的基础区别与使用边界
+
+### 专业讲解
+
+Git 分支本质上是“指向某个提交的可移动引用”。这也是为什么 Git 分支创建和切换速度很快，因为大多数时候它并不是在复制整份项目，而是在移动指针。
+
+分支的核心价值主要体现在三类场景：
+
+- 功能隔离：一个功能一个分支，避免不同改动混在一起
+- 并行开发：多人可以同时在不同分支上推进工作
+- 风险控制：实验性改动、临时修复、正式主线可以分开管理
+
+几个高频命令的职责可以这样理解：
+
+| 命令 | 作用 |
+|------|------|
+| `git branch` | 创建、查看、删除分支 |
+| `git switch` | 切换分支，或创建并切换到新分支 |
+| `git checkout` | 历史兼容命令，可用于切换分支或恢复文件 |
+| `git merge` | 将一个分支的提交整合到当前分支 |
+| `git rebase` | 改变当前分支的基底，让提交“接到”新的起点上 |
+| `git stash` | 临时保存当前未提交的改动，便于切换上下文 |
+
+本手册遵循开发方案中的命令表述策略：
+
+- 正文优先使用 `git switch`
+- `git checkout` 只作为兼容命令补充说明
+
+`merge` 和 `rebase` 的基础区别可以先这样理解：
+
+- `merge` 更像“把两条开发线汇合起来”，通常会保留分叉历史
+- `rebase` 更像“把你的提交整体挪到新的起点后面”，历史会更线性
+
+在日常开发里，可以先掌握一个基础判断：
+
+- 公共分支、更稳定的协作场景，优先理解和使用 `merge`
+- 个人本地整理提交历史时，再谨慎使用 `rebase`
+
+`stash` 的典型场景是：你改到一半，突然需要切到别的分支处理问题，但当前修改还不适合提交。这时可以先暂存，再切走，回来后再恢复。
+
+### 通俗解读
+
+可以把分支理解成“同一个项目的平行工作线”。
+
+- `main` 像正式主线
+- `feature/xxx` 像你正在单独推进的一个功能支线
+- 当支线完成后，再把它合回主线
+
+`merge` 和 `rebase` 可以用两种形象方式来记：
+
+- `merge` 像两条路在前面汇合
+- `rebase` 像把你这条路整体搬到另一条路后面重新接上
+
+而 `stash` 更像“把桌面上做到一半的东西临时收进抽屉”，这样你可以先去处理别的任务，回来再继续。
+
+### 高频示例
+
+#### 1. 查看当前分支和所有本地分支
+
+```bash
+git branch
+```
+
+如果你只想看当前分支名，也可以使用：
+
+```bash
+git branch --show-current
+```
+
+#### 2. 创建并切换到新功能分支
+
+```bash
+git switch -c feature/user-login
+```
+
+等价的历史兼容写法是：
+
+```bash
+git checkout -b feature/user-login
+```
+
+#### 3. 切回主分支
+
+```bash
+git switch main
+```
+
+#### 4. 合并功能分支到当前分支
+
+假设你现在已经切回 `main`：
+
+```bash
+git merge feature/user-login
+```
+
+如果是快进合并，Git 可能直接移动分支指针；如果不是快进合并，Git 可能生成一次新的 merge commit。
+
+#### 5. 用 `rebase` 同步主分支最新提交
+
+假设你当前位于功能分支：
+
+```bash
+git rebase main
+```
+
+它的含义是：把当前功能分支上的提交，重新接到 `main` 最新提交之后。
+
+#### 6. 临时保存未提交改动
+
+```bash
+git stash push -m "wip: login form"
+```
+
+查看当前 stash 列表：
+
+```bash
+git stash list
+```
+
+恢复最近一次 stash 并尝试从列表中移除：
+
+```bash
+git stash pop
+```
+
+#### 7. 删除已经合并完成的分支
+
+```bash
+git branch -d feature/user-login
+```
+
+### 图示
+
+```mermaid
+gitGraph
+    commit id: "init"
+    branch feature/login
+    checkout feature/login
+    commit id: "login-1"
+    commit id: "login-2"
+    checkout main
+    commit id: "main-1"
+    merge feature/login
+```
+
+### 风险与注意事项
+
+- `git switch` 是更适合新手理解的切换命令；`git checkout` 功能更杂，学习初期不要把它当成唯一入口。
+- `git merge` 可能触发冲突；如果冲突出现，不要急着用强制手段覆盖历史。
+- `git rebase` 会改写提交历史。已经推送到公共分支的历史，不建议随意 rebase。
+- `git stash` 只是临时保存现场，不是长期备份方案；stash 太多时容易忘记内容来源。
+- 删除分支前先确认该分支是否真的已经合并，优先使用 `git branch -d`，不要默认使用更激进的删除方式。
+
+### 参考链接
+
+- [git-branch 官方文档](https://git-scm.com/docs/git-branch)
+- [git-switch 官方文档](https://git-scm.com/docs/git-switch)
+- [git-checkout 官方文档](https://git-scm.com/docs/git-checkout)
+- [git-merge 官方文档](https://git-scm.com/docs/git-merge)
+- [git-rebase 官方文档](https://git-scm.com/docs/git-rebase)
+- [git-stash 官方文档](https://git-scm.com/docs/git-stash)
+- [Learn Git Branching](https://learngitbranching.js.org/)
 
 ## 5. 回滚、撤销与恢复
 
-本章节暂保留结构，后续将补齐 `reset`、`revert`、`restore`、`commit --amend` 等内容，并重点说明风险边界。
+### 模块目标
+
+- 理解 `reset`、`revert`、`restore`、`commit --amend` 的职责差异
+- 能区分“撤销工作区改动”“撤销暂存”“撤销提交”“修正最近一次提交”
+- 建立先判断场景、再选择命令的习惯
+- 对高风险回滚命令保持明确警惕
+
+### 专业讲解
+
+Git 中“回滚、撤销、恢复”是最容易混淆的一组操作，因为它们看起来都像在“后退”，但作用层级并不一样。
+
+可以先按对象来分：
+
+- 工作区文件：你当前正在编辑但还没提交的内容
+- 暂存区内容：已经 `add`，准备提交的内容
+- 提交历史：已经写进仓库历史的 commit
+
+这几个高频命令分别更适合处理不同层级的问题：
+
+| 命令 | 更适合解决的问题 |
+|------|------------------|
+| `git restore` | 恢复工作区或暂存区中的文件内容 |
+| `git reset` | 重置暂存区状态，或让当前分支回到某个提交 |
+| `git revert` | 用一个新提交撤销某个旧提交的影响 |
+| `git commit --amend` | 修改最近一次提交的内容或提交信息 |
+
+这四个命令里，最需要先建立边界意识的是：
+
+- `git restore` 更偏向“把文件恢复成某个状态”
+- `git reset` 更偏向“重置 HEAD 或暂存区状态”
+- `git revert` 更偏向“保留历史，但新增一个反向提交”
+- `git commit --amend` 更偏向“修改最近一次提交”
+
+`git reset` 之所以容易出问题，是因为不同模式影响范围不同：
+
+- `--soft`：移动 `HEAD`，保留暂存区和工作区
+- `--mixed`：移动 `HEAD` 并重置暂存区，默认模式
+- `--hard`：移动 `HEAD`，并重置暂存区和工作区
+
+其中 `--hard` 风险最大，因为它会直接覆盖工作区未提交改动。
+
+`git revert` 的思路和 `reset` 完全不同。它不会把历史“删掉”，而是新增一个提交，把旧提交带来的改动反向抵消。也正因为这样，它通常更适合已经共享出去的历史。
+
+`git commit --amend` 常见于两种场景：
+
+- 刚提交完，发现提交信息写错
+- 刚提交完，发现漏了一个小文件或一个小改动
+
+但它也会改写最近一次提交的提交对象，因此如果这次提交已经推送到公共分支，后续处理要更谨慎。
+
+### 通俗解读
+
+这几个命令可以先用一句话区分：
+
+- `restore`：把文件状态“恢复回去”
+- `reset`：把当前进度“退回去”
+- `revert`：不删历史，而是“做一个反向操作”
+- `amend`：把最近一次提交“改一下”
+
+如果用生活化比喻：
+
+- `restore` 像把草稿恢复成之前保存的版本
+- `reset` 像把当前进度条往回拨
+- `revert` 像在记录本上补写一条“撤销上一条决定”
+- `amend` 像刚发出去一封邮件，马上补发修正版并替换最新版本
+
+初学阶段可以优先记一个安全原则：
+
+- 没共享出去的本地历史，更适合用 `reset`、`restore`、`amend`
+- 已经共享出去的历史，更适合优先考虑 `revert`
+
+### 高频示例
+
+#### 1. 丢弃工作区对某个文件的未提交修改
+
+```bash
+git restore README.md
+```
+
+适用场景：
+
+- 文件已经被跟踪
+- 你改坏了，想恢复到当前暂存区里的版本
+
+#### 2. 撤销暂存区中的某个文件
+
+```bash
+git restore --staged README.md
+```
+
+适用场景：
+
+- 你执行了 `git add`
+- 但现在又不想让这个文件进入下一次提交
+
+#### 3. 修改最近一次提交的信息
+
+```bash
+git commit --amend -m "docs: refine git basics section"
+```
+
+适用场景：
+
+- 最近一次提交信息写错
+- 还没推送到远程或确认可以安全改写
+
+#### 4. 漏提交了一个文件，补进最近一次提交
+
+```bash
+git add README.md
+git commit --amend --no-edit
+```
+
+其中 `--no-edit` 表示保留原来的提交信息不变。
+
+#### 5. 回退到上一个提交，但保留修改内容在暂存区
+
+```bash
+git reset --soft HEAD~1
+```
+
+适用场景：
+
+- 最近一次提交不满意
+- 想重新组织提交，但不丢改动
+
+#### 6. 回退到上一个提交，并把改动退回工作区
+
+```bash
+git reset --mixed HEAD~1
+```
+
+说明：
+
+- `--mixed` 是默认模式
+- 这会移除最近一次提交，同时把原本已暂存的改动退回为未暂存状态
+
+#### 7. 用新提交撤销某次历史提交
+
+```bash
+git revert HEAD
+```
+
+适用场景：
+
+- 某次提交已经进入共享历史
+- 你想保留历史链路，但撤销这次改动的影响
+
+### 图示
+
+```mermaid
+flowchart TD
+    A[只是文件改乱了] --> B[git restore]
+    C[只是暂存错了] --> D[git restore --staged 或 git reset path]
+    E[最近一次提交信息或内容要微调] --> F[git commit --amend]
+    G[本地提交想重做且未共享] --> H[git reset --soft / --mixed]
+    I[共享历史中的提交要撤销] --> J[git revert]
+    K[想直接抹掉未提交改动] --> L[git reset --hard]
+    L --> M[高风险，谨慎使用]
+```
+
+### 风险与注意事项
+
+- `git reset --hard` 会直接覆盖工作区和暂存区内容。在不确定后果前，不要轻易使用。
+- `git revert` 通常要求工作区干净，先确认没有未提交改动再执行会更稳妥。
+- `git commit --amend` 会改写最近一次提交；如果这次提交已经推送到公共分支，要先确认是否允许改写历史。
+- `git restore` 更适合处理文件级恢复；如果你真正想处理的是“提交历史”，不要误用它。
+- 当你分不清该用 `reset` 还是 `revert` 时，可以先问自己一个问题：这段历史是否已经共享给别人。
+
+### 参考链接
+
+- [git-reset 官方文档](https://git-scm.com/docs/git-reset)
+- [git-revert 官方文档](https://git-scm.com/docs/git-revert)
+- [git-restore 官方文档](https://git-scm.com/docs/git-restore)
+- [git-commit 官方文档](https://git-scm.com/docs/git-commit)
+- [Pro Git: Undoing Things](https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things)
 
 ## 6. 冲突解决
 
-本章节暂保留结构，后续将补齐冲突产生原因、冲突查看、冲突处理流程和减少冲突的方法。
+### 模块目标
+
+- 理解 Git 冲突为什么会发生
+- 认识最常见的冲突标记和排查入口
+- 掌握基础冲突解决流程
+- 建立减少冲突的工作习惯
+
+### 专业讲解
+
+Git 冲突通常发生在“Git 无法自动判断应该保留哪一份修改”的时候。最常见的场景有两类：
+
+- 你在合并分支时，两个分支都改了同一个文件的同一部分
+- 你在拉取远程更新或执行 rebase 时，本地修改和上游修改发生了重叠
+
+冲突不是仓库损坏，也不代表 Git 失效。它的真正含义是：自动合并到这里为止已经不够安全，必须由你来决定最终保留什么内容。
+
+Git 常见的冲突入口包括：
+
+- `git merge`
+- `git pull`
+- `git rebase`
+- `git stash pop`
+
+当冲突发生后，通常会看到以下特征：
+
+- `git status` 提示存在 unmerged paths
+- 文件中出现冲突标记，如 `<<<<<<<`、`=======`、`>>>>>>>`
+- Git 阻止你直接继续提交，直到冲突被解决
+
+一个最基础的冲突解决流程通常是：
+
+1. 用 `git status` 确认哪些文件冲突
+2. 打开冲突文件，阅读标记内容
+3. 手动决定保留哪部分内容，或整合为新的最终版本
+4. 删除冲突标记
+5. 再次 `git add`
+6. 根据当前流程继续 merge / rebase / commit
+
+需要特别注意的是：`merge` 和 `rebase` 的冲突后续命令并不完全一样。
+
+- 合并冲突解决后，通常继续正常提交流程
+- rebase 冲突解决后，经常需要执行 `git rebase --continue`
+
+### 通俗解读
+
+可以把冲突想成“两个人同时改了同一段内容，Git 不敢替你拍板”。
+
+比如：
+
+- 你把一段文字改成了 A
+- 别人把同一段文字改成了 B
+- Git 知道这里变了，但它不知道最后应该保留 A、B，还是你们两者的组合
+
+所以 Git 会先把选择权交给你，而不是擅自覆盖其中一边。
+
+### 高频示例
+
+#### 1. 查看当前有哪些冲突文件
+
+```bash
+git status
+```
+
+你通常会看到类似：
+
+- `both modified`
+- `unmerged paths`
+
+#### 2. 识别文件中的冲突标记
+
+冲突文件里常见结构如下：
+
+```text
+<<<<<<< HEAD
+当前分支中的内容
+=======
+另一边带来的内容
+>>>>>>> feature/xxx
+```
+
+说明：
+
+- `<<<<<<< HEAD` 到 `=======` 之间，通常是当前分支版本
+- `=======` 到 `>>>>>>> ...` 之间，通常是另一边的版本
+
+#### 3. 合并冲突后的最小处理流程
+
+```bash
+git status
+# 手动编辑冲突文件，删除冲突标记
+git add conflicted-file.txt
+git commit
+```
+
+#### 4. rebase 冲突后的最小处理流程
+
+```bash
+git status
+# 手动编辑冲突文件，删除冲突标记
+git add conflicted-file.txt
+git rebase --continue
+```
+
+如果你决定这次 rebase 不继续了，也可以中止：
+
+```bash
+git rebase --abort
+```
+
+#### 5. 合并流程想放弃时
+
+如果当前是一次正在进行中的 merge，也可以中止：
+
+```bash
+git merge --abort
+```
+
+### 图示
+
+```mermaid
+flowchart TD
+    A[执行 merge / pull / rebase / stash pop] --> B[Git 发现无法自动合并]
+    B --> C[git status 查看冲突文件]
+    C --> D[打开文件读取冲突标记]
+    D --> E[手动整合最终内容]
+    E --> F[删除冲突标记]
+    F --> G[git add 标记已解决]
+    G --> H{当前流程类型}
+    H -->|merge| I[git commit 或完成 merge]
+    H -->|rebase| J[git rebase --continue]
+```
+
+### 风险与注意事项
+
+- 解决冲突时不要只删除标记却忘了检查最终内容是否正确。
+- 冲突解决完后，最好重新运行相关测试或最小验证，确认功能没有被手动合并过程破坏。
+- `git merge --abort` 和 `git rebase --abort` 适合“本次整合先取消”，不要混用。
+- 冲突不是异常情况，而是多人协作和历史整合中的正常入口，关键是按流程处理。
+- 如果你不理解两边修改意图，优先先看提交历史或与协作方沟通，不要盲目保留其中一边。
+
+### 参考链接
+
+- [git-merge 官方文档](https://git-scm.com/docs/git-merge)
+- [git-rebase 官方文档](https://git-scm.com/docs/git-rebase)
+- [git-status 官方文档](https://git-scm.com/docs/git-status)
+- [Pro Git: Basic Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
 
 ## 7. 标签与版本标记
 
-本章节暂保留结构，后续将补齐 `git tag` 的基础用法与版本发布场景。
+### 模块目标
+
+- 理解标签在 Git 中的定位
+- 掌握轻量标签与附注标签的基本区别
+- 能为版本发布创建、查看、删除和推送标签
+- 建立“标签用于标记版本点”的基本意识
+
+### 专业讲解
+
+标签（tag）用于给某个特定提交打上一个更稳定、更容易识别的名字。它最常见的用途是：
+
+- 标记版本发布点，例如 `v1.0.0`
+- 快速定位某个里程碑提交
+- 配合发布说明、归档和回溯使用
+
+Git 中最常见的两类标签是：
+
+- 轻量标签：更像一个简单的别名，直接指向某个提交
+- 附注标签：除了指向提交，还包含标签名、说明、创建者、日期等元信息
+
+在实际项目里，版本发布通常更推荐使用附注标签，因为它信息更完整，也更适合长期维护。
+
+高频命令包括：
+
+| 命令 | 作用 |
+|------|------|
+| `git tag` | 查看标签 |
+| `git tag v1.0.0` | 创建轻量标签 |
+| `git tag -a v1.0.0 -m "..."` | 创建附注标签 |
+| `git tag -d v1.0.0` | 删除本地标签 |
+| `git push origin v1.0.0` | 推送指定标签到远程 |
+| `git fetch --tags` | 拉取远程标签 |
+
+### 通俗解读
+
+可以把标签理解成“给某个历史提交贴一个正式名字”。
+
+比如：
+
+- 你平时提交很多次，提交 hash 不容易记
+- 但当一个版本准备发布时，你可以给它贴上 `v1.0.0`
+- 以后别人一看到这个标签，就知道这是一个正式版本点
+
+所以标签不是用来替代分支的，而是用来标记“某个已经确定的重要历史位置”。
+
+### 高频示例
+
+#### 1. 查看本地所有标签
+
+```bash
+git tag
+```
+
+#### 2. 创建轻量标签
+
+```bash
+git tag v1.0.0
+```
+
+#### 3. 创建附注标签
+
+```bash
+git tag -a v1.0.0 -m "Release version 1.0.0"
+```
+
+#### 4. 查看标签详细信息
+
+```bash
+git show v1.0.0
+```
+
+#### 5. 推送指定标签到远程
+
+```bash
+git push origin v1.0.0
+```
+
+#### 6. 拉取远程标签
+
+```bash
+git fetch --tags
+```
+
+#### 7. 删除本地标签
+
+```bash
+git tag -d v1.0.0
+```
+
+### 图示
+
+```mermaid
+flowchart LR
+    A[提交历史] --> B[选定发布提交]
+    B --> C[创建标签 v1.0.0]
+    C --> D[git show v1.0.0 查看详情]
+    C --> E[git push origin v1.0.0 推送到远程]
+```
+
+### 风险与注意事项
+
+- 标签本身不是分支，不会随着后续提交自动向前移动。
+- 发布标签建议使用附注标签，避免只留下一个过于简陋的名字引用。
+- 如果某个标签已经公开给团队或用户，不要随意删除再重建，否则会造成版本混乱。
+- 删除本地标签不会自动删除远程标签，它们是两件事。
+- 标签命名建议尽量统一，例如使用 `v1.0.0` 这种格式。
+
+### 参考链接
+
+- [git-tag 官方文档](https://git-scm.com/docs/git-tag)
+- [Pro Git: Tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging)
 
 ## 8. Git 原理
 
-本章节暂保留结构，后续将补齐工作区、暂存区、本地仓库、对象模型、快照模型和分布式原理。
+### 模块目标
+
+- 建立 Git 底层模型的基础认知
+- 理解工作区、暂存区、本地仓库和远程仓库之间的关系
+- 理解 blob、tree、commit、tag 这些核心对象的职责
+- 知道 Git 为什么适合分支和分布式协作
+
+### 专业讲解
+
+如果只停留在“会敲命令”，很多 Git 问题会显得很抽象；但一旦理解了它的底层模型，很多现象就会更容易解释。
+
+先抓住三个最重要的区域：
+
+- 工作区（working tree / working directory）：你眼前正在编辑的文件
+- 暂存区（index / staging area）：下一次提交准备写入的内容
+- 本地仓库（repository）：已经记录下来的提交历史和对象
+
+远程仓库并不是 Git 的“唯一大脑”，而更像是分布式协作中的共享同步点。本地仓库本身就能独立保存完整历史。
+
+Git 中最核心的对象通常可以先理解为四种：
+
+| 对象 | 作用 |
+|------|------|
+| blob | 保存文件内容 |
+| tree | 保存目录结构以及目录中对象的指向关系 |
+| commit | 保存一次提交的元信息，并指向对应的 tree |
+| tag | 给某个对象起一个稳定名字，常见于版本标记 |
+
+从用户理解层面看，Git 的版本控制更接近“快照模型”：
+
+- 每次提交都可以理解为“当前项目状态的一次快照”
+- 提交之间形成链式结构
+- 分支本质上只是指向某个提交的引用
+
+这也是为什么：
+
+- 创建分支通常很快
+- 切换分支通常也很快
+- `HEAD` 可以理解为“当前你所在位置”的一个特殊指针
+
+如果从分布式角度理解 Git，可以先记住：
+
+- 每个本地仓库都能独立工作
+- `clone` 会把历史复制到本地
+- `fetch/pull/push` 只是不同形式的同步
+- 没网时你依然可以本地提交、建分支、查历史
+
+关于对象哈希，还可以知道一个基础事实：
+
+- Git 历史上长期使用 `SHA-1`
+- 新仓库或启用相关格式扩展时也可能使用 `SHA-256`
+- 具体以本机仓库格式和当前 Git 版本文档为准
+
+### 通俗解读
+
+可以把 Git 的底层理解成“项目快照仓库”：
+
+- blob 像一份文件内容
+- tree 像一层目录清单
+- commit 像一条带说明的快照记录
+- branch 像贴在某条记录上的标签箭头
+- HEAD 像你当前正站着的位置
+
+这样再回头看前面的命令就会更清楚：
+
+- `git add` 是把工作区内容准备进下一次快照
+- `git commit` 是正式生成一条新的历史记录
+- `git branch` 不是复制项目，而是新建一个指向历史位置的名字
+
+### 高频示例
+
+#### 1. 查看当前仓库使用的对象格式
+
+```bash
+git rev-parse --show-object-format
+```
+
+#### 2. 查看提交历史的图形化结构
+
+```bash
+git log --oneline --graph --decorate
+```
+
+#### 3. 查看某次提交的详细内容
+
+```bash
+git show HEAD
+```
+
+#### 4. 查看 `.git` 目录
+
+```bash
+ls .git
+```
+
+说明：
+
+- Windows 用户如果在 PowerShell 中，可以使用 `Get-ChildItem .git`
+- 这里不要求记住所有内部文件，只要知道本地仓库的大部分历史数据都在 `.git` 中
+
+### 图示
+
+```mermaid
+flowchart LR
+    A[工作区] -->|git add| B[暂存区 index]
+    B -->|git commit| C[commit 对象]
+    C --> D[tree 对象]
+    D --> E[blob 对象]
+    F[branch 指针] --> C
+    G[HEAD] --> F
+    C <--> H[远程仓库中的同步历史]
+```
+
+### 风险与注意事项
+
+- 学习 Git 原理的目标是帮助你理解使用行为，不是要求你立刻掌握所有内部对象细节。
+- “Git 是快照模型”是理解层面的主线，不必纠结底层存储实现中的所有压缩细节。
+- `.git` 目录非常重要，但不要随意手工修改其中内容。
+- 如果你一开始觉得 blob、tree、commit 很抽象，先建立角色分工认知就够了，后续再逐步深入。
+
+### 参考链接
+
+- [Pro Git: What is Git?](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)
+- [Pro Git: Git Objects](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)
+- [Pro Git: Branches in a Nutshell](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+- [git-rev-parse 官方文档](https://git-scm.com/docs/git-rev-parse)
+- [git-show 官方文档](https://git-scm.com/docs/git-show)
 
 ## 9. 常见问题排查
 
@@ -578,7 +1300,7 @@ git push
 - 遇到问题时，优先先看 `git status`，不要一上来就尝试危险命令。
 - 在还没理解后果前，不要轻易使用 `git reset --hard`、强制推送等高风险操作。
 - 远程地址错误和权限问题经常被误判成“Git 命令失效”，先分清是配置问题还是历史冲突问题。
-- 本轮只覆盖基础排障入口，更复杂的回滚、冲突恢复和历史修复会在后续章节单独展开。
+- 如果问题涉及回滚、冲突、标签或底层原理，优先回到前面的对应章节定位，而不是只盯着报错文字。
 
 ### 参考链接
 
@@ -597,6 +1319,6 @@ git push
 
 ## 当前状态
 
-- 当前已完成 Phase 1 基础使用初稿
-- 已补齐基础使用闭环所需的核心章节
-- 进阶、原理、统一冲突与恢复内容待后续迭代补齐
+- 当前已完成 Part 1 全量初稿
+- 基础使用、分支管理、回滚恢复、冲突、标签和原理章节已补齐
+- 后续重点转向案例深化、图示完善、参考链接核验和局部细化
