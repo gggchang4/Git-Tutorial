@@ -10,16 +10,21 @@
 - 已会基础命令，但缺少知识结构的人
 - 希望把 Git 用法和原理真正串起来的读者
 
-## 当前开发范围说明
+## 当前版本说明
 
-本轮按照开发方案的 Phase 1 先交付基础使用闭环，优先补齐以下内容：
+当前版本已经完成 Part 1 的全量初稿，覆盖以下内容：
 
 - Git 简介与安装配置
 - 本地仓库核心操作
 - 远程仓库基础交互
-- 常见问题排查中的基础版内容
+- 分支管理与协作
+- 回滚、撤销与恢复
+- 冲突解决
+- 标签与版本标记
+- Git 原理
+- 常见问题排查
 
-分支管理、回滚恢复、冲突解决、标签和原理章节暂保留稳定骨架，后续再继续补齐。
+本阶段目标已经从“先完成基础闭环”升级为“形成一份可阅读、可继续打磨的完整 Part 1 初稿”。后续重点将放在案例深化、图示优化、链接核验和术语统一上。
 
 ## 1. Git 简介与安装配置
 
@@ -270,6 +275,15 @@ flowchart LR
     A -. git diff .-> A
     B -. git diff --cached .-> B
     C -. git log .-> C
+```
+
+补充一个更贴近 Git 历史视角的图示：
+
+```mermaid
+gitGraph
+    commit id: "git init"
+    commit id: "第一次提交"
+    commit id: "第二次提交"
 ```
 
 ### 风险与注意事项
@@ -759,6 +773,18 @@ flowchart TD
     L --> M[高风险，谨慎使用]
 ```
 
+如果从提交历史的角度看，`revert` 更适合这样理解：
+
+```mermaid
+gitGraph
+    commit id: "init"
+    commit id: "功能提交 A"
+    commit id: "误提交 B"
+    commit id: "revert B"
+```
+
+这张图想表达的是：`revert` 不会抹掉旧提交，而是在历史后面新增一个“反向提交”。
+
 ### 风险与注意事项
 
 - `git reset --hard` 会直接覆盖工作区和暂存区内容。在不确定后果前，不要轻易使用。
@@ -897,17 +923,17 @@ git merge --abort
 ### 图示
 
 ```mermaid
-flowchart TD
-    A[执行 merge / pull / rebase / stash pop] --> B[Git 发现无法自动合并]
-    B --> C[git status 查看冲突文件]
-    C --> D[打开文件读取冲突标记]
-    D --> E[手动整合最终内容]
-    E --> F[删除冲突标记]
-    F --> G[git add 标记已解决]
-    G --> H{当前流程类型}
-    H -->|merge| I[git commit 或完成 merge]
-    H -->|rebase| J[git rebase --continue]
+gitGraph
+    commit id: "base"
+    branch feature/login
+    checkout feature/login
+    commit id: "功能分支修改"
+    checkout main
+    commit id: "主分支修改"
+    merge feature/login
 ```
+
+上面的图表示“两边都继续向前走，然后在整合时相遇”。如果双方修改刚好重叠到同一段内容，就容易在 `merge`、`pull` 或 `rebase` 阶段出现冲突。
 
 ### 风险与注意事项
 
@@ -1018,12 +1044,15 @@ git tag -d v1.0.0
 ### 图示
 
 ```mermaid
-flowchart LR
-    A[提交历史] --> B[选定发布提交]
-    B --> C[创建标签 v1.0.0]
-    C --> D[git show v1.0.0 查看详情]
-    C --> E[git push origin v1.0.0 推送到远程]
+gitGraph
+    commit id: "init"
+    commit id: "feat: auth"
+    commit id: "docs"
+    commit id: "release" tag: "v1.0.0"
+    commit id: "post-release patch"
 ```
+
+这张图可以帮助理解标签的本质：标签是贴在某个既定提交上的名字，而不是会继续向前移动的分支。
 
 ### 风险与注意事项
 
@@ -1152,6 +1181,21 @@ flowchart LR
     G[HEAD] --> F
     C <--> H[远程仓库中的同步历史]
 ```
+
+如果只看提交历史和分支指针，可以进一步把 Git 想成下面这样：
+
+```mermaid
+gitGraph
+    commit id: "init"
+    commit id: "commit A"
+    branch feature
+    checkout feature
+    commit id: "feature work"
+    checkout main
+    commit id: "main work"
+```
+
+这张图能帮助理解：分支不是复制整个项目，而是在同一份历史上分出不同的提交路线。
 
 ### 风险与注意事项
 
