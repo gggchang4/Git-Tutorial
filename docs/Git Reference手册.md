@@ -27,6 +27,42 @@
 - 对高风险命令显式标注风险
 - 对易混淆命令保留必要对比说明
 
+## 命令关系速览
+
+下面几张图不是为了替代具体命令条目，而是为了帮助你先快速判断“当前问题属于哪一类命令”。
+
+### 本地改动到提交的基本路径
+
+```mermaid
+flowchart LR
+    A[工作区] -->|git add| B[暂存区]
+    B -->|git commit| C[提交历史]
+    A -. git diff .-> A
+    B -. git diff --cached .-> B
+    C -. git log / git show .-> C
+```
+
+### 远程同步命令关系
+
+```mermaid
+flowchart LR
+    A[远程仓库] -->|git clone| B[新的本地仓库]
+    A -->|git fetch| C[本地远程跟踪引用]
+    C -->|git pull| D[当前分支整合更新]
+    D -->|git push| A
+```
+
+### 回滚与恢复命令关系
+
+```mermaid
+flowchart TD
+    A[只是文件状态不对] --> B[git restore]
+    C[只是提交历史需要重做] --> D[git reset]
+    E[共享历史中的某次提交要撤销] --> F[git revert]
+    G[最近一次提交要补改] --> H[git commit --amend]
+    I[误操作后要找回线索] --> J[git reflog]
+```
+
 ## 目录
 
 - [1. 本地仓库命令](#1-本地仓库命令)
@@ -384,6 +420,15 @@ git rm --cached .env
 
 ## 2. 远程仓库命令
 
+### 远程命令速查对照
+
+| 命令 | 典型问题 | 是否自动整合当前分支 |
+|------|----------|----------------------|
+| `git clone` | 我还没有本地仓库，先复制一份 | 不涉及 |
+| `git fetch` | 我想先拿到远程更新，但先不合并 | 否 |
+| `git pull` | 我想拿到远程更新并直接整合 | 是 |
+| `git push` | 我想把本地提交同步到远程 | 不适用 |
+
 ### `git clone`
 
 #### 命令用途
@@ -410,6 +455,10 @@ git clone git@github.com:your-name/git-demo.git
 
 ```bash
 git clone -b main --single-branch git@github.com:your-name/git-demo.git
+```
+
+```bash
+git clone --depth 1 git@github.com:your-name/git-demo.git
 ```
 
 #### 注意事项
@@ -492,6 +541,10 @@ git fetch
 git fetch --prune
 ```
 
+```bash
+git fetch origin main
+```
+
 #### 注意事项
 
 - `fetch` 和 `pull` 的区别在于：`fetch` 不会自动整合到当前分支。
@@ -529,11 +582,16 @@ git pull
 git pull --rebase
 ```
 
+```bash
+git pull --ff-only
+```
+
 #### 注意事项
 
 - `pull` 本质上是“fetch + merge/rebase”。
 - 它可能引发冲突，因此在复杂协作场景下要明确当前团队偏好的是 merge 还是 rebase。
 - 如果你不想自动整合，先用 `fetch` 更安全。
+- `pull --ff-only` 适合希望“只接受快进，不自动生成 merge 结果”的场景。
 
 #### 官方文档链接
 
@@ -610,6 +668,32 @@ git fetch --prune
 
 ## 3. 分支与合并命令
 
+### 分支命令速查对照
+
+| 命令 | 更适合的场景 |
+|------|--------------|
+| `git branch` | 创建、查看、删除分支 |
+| `git switch` | 纯分支切换，或创建并切换 |
+| `git checkout` | 历史兼容写法；切换分支或恢复文件 |
+| `git merge` | 保留分支汇合关系地整合历史 |
+| `git rebase` | 让历史更线性地重放提交 |
+| `git stash` | 临时保存未提交改动 |
+| `git cherry-pick` | 只拿某一个提交，不整条分支 |
+
+### 分支整合关系图
+
+```mermaid
+gitGraph
+    commit id: "init"
+    branch feature/login
+    checkout feature/login
+    commit id: "feature-1"
+    commit id: "feature-2"
+    checkout main
+    commit id: "main-1"
+    merge feature/login
+```
+
 ### `git branch`
 
 #### 命令用途
@@ -684,6 +768,7 @@ git switch -c feature/user-login
 
 - `switch` 是更适合新手理解的现代切换命令。
 - 如果你只是想切换分支，优先考虑 `switch` 而不是 `checkout`。
+- 如果你要恢复文件内容，应该优先看 `git restore`，而不是继续把 `switch` 和 `checkout` 混用。
 
 #### 官方文档链接
 
@@ -791,6 +876,10 @@ git rebase main
 git rebase -i HEAD~3
 ```
 
+```bash
+git rebase --abort
+```
+
 #### 注意事项
 
 - `rebase` 会改写提交历史。
@@ -875,6 +964,10 @@ git cherry-pick <commit-hash>
 git cherry-pick -x <commit-hash>
 ```
 
+```bash
+git cherry-pick --abort
+```
+
 #### 注意事项
 
 - `cherry-pick` 适合“只要某个提交，不整条分支”的场景。
@@ -886,6 +979,27 @@ git cherry-pick -x <commit-hash>
 - [git-cherry-pick](https://git-scm.com/docs/git-cherry-pick)
 
 ## 4. 回滚与恢复命令
+
+### 回滚命令速查对照
+
+| 命令 | 更适合的场景 | 是否改写已有历史 |
+|------|--------------|------------------|
+| `git restore` | 恢复文件或暂存区状态 | 否 |
+| `git reset` | 本地重做提交或重置状态 | 是，可能改写 |
+| `git revert` | 用新提交撤销旧提交 | 否，保留历史 |
+| `git commit --amend` | 修改最近一次提交 | 是 |
+| `git reflog` | 找回误操作线索 | 否 |
+
+### 回滚关系图
+
+```mermaid
+flowchart TD
+    A[文件改坏了] --> B[git restore]
+    C[最近一次或几次提交要重做] --> D[git reset]
+    E[共享历史里的提交要撤销] --> F[git revert]
+    G[最近一次提交要补改] --> H[git commit --amend]
+    I[误 reset / 误删分支后要找线索] --> J[git reflog]
+```
 
 ### `git reset`
 
@@ -916,11 +1030,16 @@ git reset --soft HEAD~1
 git reset --mixed HEAD~1
 ```
 
+```bash
+git reset --hard HEAD~1
+```
+
 #### 注意事项
 
 - `reset --hard` 风险极高，会直接覆盖工作区改动。
 - 本地未共享历史更适合考虑 `reset`。
 - 如果历史已经共享，先考虑 `revert` 是否更合适。
+- 如果你只是想恢复文件内容，优先看 `restore`，不要上来就用 `reset`。
 
 #### 官方文档链接
 
@@ -947,6 +1066,10 @@ git revert [<options>] <commit>...
 
 ```bash
 git revert HEAD
+```
+
+```bash
+git revert --no-commit <commit-hash>
 ```
 
 #### 注意事项
@@ -986,10 +1109,15 @@ git restore README.md
 git restore --staged README.md
 ```
 
+```bash
+git restore --source=HEAD~1 README.md
+```
+
 #### 注意事项
 
 - 恢复文件内容优先考虑 `restore`，不要默认回到 `checkout`。
 - `restore` 更适合文件级恢复，不是处理提交历史的主命令。
+- `--source=<tree-ish>` 很适合“从某个历史点恢复指定文件”，但要确认你恢复的是正确来源。
 
 #### 官方文档链接
 
@@ -1017,6 +1145,10 @@ git reflog [show] [<ref>]
 git reflog
 ```
 
+```bash
+git reflog show HEAD
+```
+
 #### 注意事项
 
 - `reflog` 对恢复误删分支、误 reset 等场景非常有用。
@@ -1026,6 +1158,7 @@ git reflog
 
 - [git-reflog](https://git-scm.com/docs/git-reflog)
 
+<a id="git-commit---amend"></a>
 ### `git commit --amend`
 
 #### 命令用途
@@ -1094,6 +1227,10 @@ git tag
 git tag -a v1.0.0 -m "Release version 1.0.0"
 ```
 
+```bash
+git tag v1.0.0
+```
+
 #### 注意事项
 
 - 版本发布通常更推荐附注标签。
@@ -1103,6 +1240,7 @@ git tag -a v1.0.0 -m "Release version 1.0.0"
 
 - [git-tag](https://git-scm.com/docs/git-tag)
 
+<a id="git-fetch---tags"></a>
 ### `git fetch --tags`
 
 #### 命令用途
@@ -1133,6 +1271,7 @@ git fetch --tags
 
 - [git-fetch](https://git-scm.com/docs/git-fetch)
 
+<a id="git-push-origin-tag"></a>
 ### `git push origin <tag>`
 
 #### 命令用途
@@ -1163,6 +1302,7 @@ git push origin v1.0.0
 
 - [git-push](https://git-scm.com/docs/git-push)
 
+<a id="git-tag--d-tag"></a>
 ### `git tag -d <tag>`
 
 #### 命令用途
@@ -1195,6 +1335,15 @@ git tag -d v1.0.0
 - [git-tag](https://git-scm.com/docs/git-tag)
 
 ## 6. 配置与查看类命令
+
+### 查看类命令速查对照
+
+| 命令 | 更适合的场景 |
+|------|--------------|
+| `git config` | 查配置、设配置 |
+| `git help` | 查本地帮助入口 |
+| `git show` | 看某个提交或标签详情 |
+| `git blame` | 看某一行最后是谁改的 |
 
 ### `git config`
 
