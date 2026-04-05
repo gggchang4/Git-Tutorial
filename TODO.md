@@ -82,7 +82,7 @@
 
 ## 维护与待确认
 
-- [ ] 确认是否需要补充 `.gitignore`
+- [x] 确认是否需要补充 `.gitignore`
 - [ ] 确认是否要初始化 Git 仓库
 - [ ] 确认是否需要在后续增加“更新记录”文件
 - [ ] 确认是否要为 `docs/` 单独增加目录导航页
@@ -132,6 +132,9 @@
 - [x] 将 GitLens 纳入 Part 4，并作为 VS Code 场景下的重要增强工具补充说明
 - [x] 为 Part 4 补充 GitHub Desktop、Sourcetree、GitKraken、GitLens、GitHub CLI、pre-commit、Husky、Git LFS、git-secrets、Gitleaks 等官方来源
 - [x] 复审 Part 4，并补强最小工具组合建议、安装方式速记、Hook 与 CI 边界和跨 Part 联动说明
+- [x] 重构 `README.md`，统一四个 Part 的当前状态并增强开源展示效果
+- [x] 为 README 补充本地 SVG 视觉素材、导航区、Star CTA、交互折叠区和项目状态展示
+- [x] 新增仓库级 `.gitignore`，补齐文档项目常见的本地环境、缓存和日志忽略规则
 
 ## 维护规则
 
