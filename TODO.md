@@ -83,7 +83,7 @@
 ## 维护与待确认
 
 - [x] 确认是否需要补充 `.gitignore`
-- [ ] 确认是否要初始化 Git 仓库
+- [x] 确认是否要初始化 Git 仓库
 - [ ] 确认是否需要在后续增加“更新记录”文件
 - [ ] 确认是否要为 `docs/` 单独增加目录导航页
 - [x] 确认 Part 3 中引用的大厂公开规范来源清单
@@ -135,6 +135,14 @@
 - [x] 重构 `README.md`，统一四个 Part 的当前状态并增强开源展示效果
 - [x] 为 README 补充本地 SVG 视觉素材、导航区、Star CTA、交互折叠区和项目状态展示
 - [x] 新增仓库级 `.gitignore`，补齐文档项目常见的本地环境、缓存和日志忽略规则
+- [x] 优化 README SVG 视觉风格，统一为黑白主调并加入 `GGG` 水印
+- [x] 重绘 `readme-hero.svg`，简化为纯色背景、霓虹 `Git Handbook` 标题、Git logo 和右下角小号 `GGG` 水印
+- [x] 修正 `readme-hero.svg` 中错误的 Git logo，并将标题改为内嵌 Shrikhand 字体以避免 README 渲染丢字
+- [x] 继续优化 `readme-hero.svg`，让 Git logo 与标题严格同排，并降低标题发光模糊感
+- [x] 微调 `readme-hero.svg` 的主体位置使其更居中，并增强 logo 与标题的霓虹灯闪烁效果
+- [x] 为 `readme-hero.svg` 增加更克制的外溢光晕和灯管断续感，并将整体主体向左回调到更居中的位置
+- [x] 将 `readme-hero.svg` 的主体继续左移，并把霓虹招牌灯效果强化到更高亮、更明显的风格
+- [x] 将 `readme-hero.svg` 的闪烁节奏改为低频接触不良式闪断，而不是持续高频闪烁
 
 ## 维护规则
 

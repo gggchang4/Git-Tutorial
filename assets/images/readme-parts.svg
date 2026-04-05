@@ -1,27 +1,40 @@
 <svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="320" rx="28" fill="#F6FBFE"/>
-  <rect x="54" y="82" width="244" height="154" rx="24" fill="#0F4C75"/>
-  <rect x="332" y="82" width="244" height="154" rx="24" fill="#118AB2"/>
-  <rect x="610" y="82" width="244" height="154" rx="24" fill="#2F9E44"/>
-  <rect x="888" y="82" width="258" height="154" rx="24" fill="#F08C00"/>
+  <defs>
+    <linearGradient id="bg" x1="84" y1="42" x2="1116" y2="288" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FAFAFA"/>
+      <stop offset="1" stop-color="#EDEDED"/>
+    </linearGradient>
+    <linearGradient id="cardDark" x1="54" y1="82" x2="1146" y2="236" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A1A1A"/>
+      <stop offset="1" stop-color="#2B2B2B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="320" rx="28" fill="url(#bg)"/>
+  <text x="1068" y="72" fill="#111111" fill-opacity="0.09" font-family="Georgia, Times New Roman, serif" font-size="72" font-weight="700" text-anchor="middle">GGG</text>
+
+  <rect x="54" y="82" width="244" height="154" rx="24" fill="url(#cardDark)"/>
+  <rect x="332" y="82" width="244" height="154" rx="24" fill="#303030"/>
+  <rect x="610" y="82" width="244" height="154" rx="24" fill="#444444"/>
+  <rect x="888" y="82" width="258" height="154" rx="24" fill="#5A5A5A"/>
 
   <text x="176" y="128" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Part 1</text>
-  <text x="176" y="162" fill="#D8F0FA" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Learn Git</text>
-  <text x="176" y="194" fill="#D8F0FA" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">Concepts, workflow, principles</text>
+  <text x="176" y="162" fill="#E9E9E9" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Learn Git</text>
+  <text x="176" y="194" fill="#D2D2D2" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">Concepts, workflow, principles</text>
 
   <text x="454" y="128" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Part 2</text>
-  <text x="454" y="162" fill="#D8F7FF" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Reference</text>
-  <text x="454" y="194" fill="#D8F7FF" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">Commands, params, cautions</text>
+  <text x="454" y="162" fill="#EDEDED" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Reference</text>
+  <text x="454" y="194" fill="#D7D7D7" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">Commands, params, cautions</text>
 
   <text x="732" y="128" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Part 3</text>
-  <text x="732" y="162" fill="#E3FBE8" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Practice Rules</text>
-  <text x="732" y="194" fill="#E3FBE8" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">Branches, commits, collaboration</text>
+  <text x="732" y="162" fill="#EFEFEF" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Practice Rules</text>
+  <text x="732" y="194" fill="#DADADA" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">Branches, commits, collaboration</text>
 
   <text x="1017" y="128" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Part 4</text>
-  <text x="1017" y="162" fill="#FFF3DB" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Tooling</text>
-  <text x="1017" y="194" fill="#FFF3DB" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">GitLens, hooks, LFS, workflow</text>
+  <text x="1017" y="162" fill="#F2F2F2" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">Tooling</text>
+  <text x="1017" y="194" fill="#DFDFDF" font-family="Segoe UI, Arial, sans-serif" font-size="14" text-anchor="middle">GitLens, hooks, LFS, workflow</text>
 
-  <path d="M298 159H332" stroke="#79C6DE" stroke-width="8" stroke-linecap="round"/>
-  <path d="M576 159H610" stroke="#79C6DE" stroke-width="8" stroke-linecap="round"/>
-  <path d="M854 159H888" stroke="#79C6DE" stroke-width="8" stroke-linecap="round"/>
+  <path d="M298 159H332" stroke="#A8A8A8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M576 159H610" stroke="#A8A8A8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M854 159H888" stroke="#A8A8A8" stroke-width="8" stroke-linecap="round"/>
 </svg>
