@@ -1,0 +1,60 @@
+# OS / file explorer
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+.venv/
+venv/
+env/
+
+# Node.js / frontend tooling
+node_modules/
+.pnpm-store/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+coverage/
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Archives
+*.zip
+*.tar
+*.gz
+*.7z
+
+# Generated local artifacts
+tmp/
+temp/
+
+# Keep repository assets tracked by default.
+# If a screenshot or draft image is only for local use, place it under an ignored temp directory instead.

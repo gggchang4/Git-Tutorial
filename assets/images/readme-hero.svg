@@ -1,0 +1,72 @@
+<svg width="1200" height="560" viewBox="0 0 1200 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="1120" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1F33"/>
+      <stop offset="0.55" stop-color="#113A5C"/>
+      <stop offset="1" stop-color="#1B6A8F"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="184" y1="106" x2="431" y2="302" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7CE0FF"/>
+      <stop offset="1" stop-color="#2FC1A6"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.06"/>
+    </linearGradient>
+    <filter id="shadow" x="98" y="84" width="1004" height="408" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="18"/>
+      <feGaussianBlur stdDeviation="21"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0196078 0 0 0 0 0.0862745 0 0 0 0 0.145098 0 0 0 0.24 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_2"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_2" result="shape"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="560" rx="32" fill="url(#bg)"/>
+  <circle cx="1044" cy="102" r="154" fill="#7CE0FF" fill-opacity="0.09"/>
+  <circle cx="1112" cy="418" r="184" fill="#2FC1A6" fill-opacity="0.08"/>
+  <circle cx="124" cy="472" r="146" fill="#F6C453" fill-opacity="0.08"/>
+
+  <g filter="url(#shadow)">
+    <rect x="140" y="120" width="920" height="324" rx="28" fill="url(#card)" stroke="rgba(255,255,255,0.24)"/>
+  </g>
+
+  <rect x="184" y="164" width="258" height="236" rx="24" fill="#0D273F" stroke="rgba(255,255,255,0.18)"/>
+  <rect x="214" y="194" width="198" height="88" rx="18" fill="url(#accent)"/>
+  <circle cx="248" cy="238" r="10" fill="#0D273F"/>
+  <circle cx="296" cy="238" r="10" fill="#0D273F"/>
+  <circle cx="344" cy="238" r="10" fill="#0D273F"/>
+  <path d="M242 318H384" stroke="#7CE0FF" stroke-width="12" stroke-linecap="round"/>
+  <path d="M242 348H348" stroke="#7CE0FF" stroke-width="12" stroke-linecap="round" opacity="0.72"/>
+  <path d="M242 378H314" stroke="#7CE0FF" stroke-width="12" stroke-linecap="round" opacity="0.45"/>
+
+  <path d="M510 224C558 198 604 188 654 188C734 188 802 220 846 282" stroke="#7CE0FF" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 16"/>
+  <circle cx="508" cy="224" r="14" fill="#7CE0FF"/>
+  <circle cx="620" cy="194" r="14" fill="#2FC1A6"/>
+  <circle cx="736" cy="216" r="14" fill="#F6C453"/>
+  <circle cx="844" cy="282" r="14" fill="#FF8E62"/>
+  <path d="M508 224L620 194L736 216L844 282" stroke="#FFFFFF" stroke-opacity="0.64" stroke-width="4"/>
+
+  <g>
+    <rect x="548" y="280" width="122" height="88" rx="18" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.18)"/>
+    <rect x="688" y="280" width="122" height="88" rx="18" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.18)"/>
+    <rect x="828" y="280" width="122" height="88" rx="18" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.18)"/>
+    <rect x="968" y="280" width="62" height="88" rx="18" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.18)"/>
+
+    <text x="609" y="316" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">LEARN</text>
+    <text x="749" y="316" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">REF</text>
+    <text x="889" y="316" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">RULES</text>
+    <text x="999" y="316" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">TOOLS</text>
+
+    <text x="609" y="344" fill="#D7EEF6" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle">Basics to Advanced</text>
+    <text x="749" y="344" fill="#D7EEF6" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle">Command Lookup</text>
+    <text x="889" y="344" fill="#D7EEF6" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle">Personal Practice</text>
+    <text x="999" y="344" fill="#D7EEF6" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle">Workflow</text>
+  </g>
+
+  <text x="184" y="92" fill="#C6F3FF" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Git Reference Project</text>
+  <text x="184" y="132" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="700">A personal Git handbook</text>
+  <text x="184" y="402" fill="#D7EEF6" font-family="Segoe UI, Arial, sans-serif" font-size="18">Learn better. Search faster. Work cleaner. Maintain longer.</text>
+</svg>
