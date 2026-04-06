@@ -58,6 +58,16 @@
 - `切换分支`：正文优先这样表述；涉及 `git checkout` 时，再明确写“检出（checkout）”
 - `拉取请求（Pull Request, PR）/ 合并请求（Merge Request, MR）`：首次出现写全，后文可简写为 `PR / MR`
 
+## 代码示例约定
+
+为统一四个 Part 的代码块风格，本手册默认采用以下约定：
+
+- 可直接执行的命令统一使用 `bash` 代码块
+- 命名规范、提交信息模板、流程清单统一使用 `text` 代码块
+- 流程图统一使用 `mermaid`
+- 多步命令统一用 `# 1)`、`# 2)` 注释标明动作目的
+- 示例优先覆盖真实协作场景，例如开发分支、发布、热修复、PR 自检，而不是只给最短命令
+
 ## 分支管理规范
 
 ### 1. 默认分支模型
@@ -265,6 +275,35 @@ chore: update editorconfig
 
 对应的常见命令入口可参考 Part 2，不在本节重复展开所有参数。
 
+如果你想直接照着命令走，可以用下面这个最小示例：
+
+```bash
+# 1) 先把 develop 同步到最新
+git switch develop
+git pull --ff-only origin develop
+
+# 2) 从 develop 拉出一个主题明确的功能分支
+git switch -c feature/docs-navigation
+
+# 3) 开发过程中小步提交
+git add docs/
+git commit -m "docs(git): improve handbook navigation"
+
+# 4) 提交前做最小自检
+git status -sb
+git diff --cached
+
+# 5) 合回 develop，并删除已经完成的分支
+git switch develop
+git merge feature/docs-navigation
+git branch -d feature/docs-navigation
+```
+
+说明：
+
+- 这是单人项目和小型协作里都比较稳的默认闭环
+- 如果远程存在受保护分支或必须走 PR，合回步骤应改为“推分支 + 发起 PR”
+
 ### 3. 发布流程
 
 - `硬性约束`：正式发布只从 `develop` 合入 `main`
@@ -284,6 +323,33 @@ chore: update editorconfig
 5. 再把同样的修复同步回 `develop`
 
 这一步非常关键。只合回 `main` 不同步回 `develop`，后面很容易再次把老问题带回来。
+
+对应的最小命令示例：
+
+```bash
+# 1) 从 main 拉出热修复分支
+git switch main
+git pull --ff-only origin main
+git switch -c hotfix/login-crash
+
+# 2) 修复后提交
+git add src/
+git commit -m "fix(auth): handle login crash on empty token"
+
+# 3) 先合回 main，准备发布
+git switch main
+git merge hotfix/login-crash
+git tag -a v1.2.1 -m "Release version 1.2.1"
+
+# 4) 再把同一修复同步回 develop，避免后续回归
+git switch develop
+git merge hotfix/login-crash
+```
+
+风险提示：
+
+- 不要只修 `main` 不同步 `develop`
+- 如果热修复已经推远程，后续同步和发布动作要遵循团队的分支保护规则
 
 ### 5. 关于 rebase 的边界
 
@@ -392,6 +458,33 @@ fork repository
 ```
 
 这里的重点不是“流程看起来完整”，而是保证每次改动都能被追踪、被 review、被验证。
+
+对应的最小命令示例：
+
+```bash
+# 1) 从自己的 fork 拉代码
+git clone <your-fork-url>
+cd <repo-dir>
+
+# 2) 从主仓库同步上游远程
+git remote add upstream <upstream-repo-url>
+git fetch upstream
+
+# 3) 基于目标主线创建功能分支
+git switch main
+git pull --ff-only upstream main
+git switch -c feature/fix-doc-typo
+
+# 4) 提交并推到自己的 fork
+git add docs/
+git commit -m "docs: fix handbook typo"
+git push -u origin feature/fix-doc-typo
+```
+
+说明：
+
+- 后续通常是在 GitHub 页面或 `gh pr create` 中发起 PR
+- 如果目标仓库要求从 `develop` 或其他分支提 PR，应把上面的 `main` 换成对应目标分支
 
 ### 5. 目标仓库规范优先
 

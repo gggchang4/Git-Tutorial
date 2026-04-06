@@ -40,6 +40,17 @@
 
 正文统一以中文解释概念，命令、参数、报错和 Git 官方对象名保持英文原貌。
 
+## 代码块与命令示例格式
+
+为统一四个 Part 的代码块风格，本手册默认采用以下约定：
+
+1. 可直接执行的命令统一使用 `bash` 代码块
+2. 输出示例、命名样例、流程骨架统一使用 `text` 代码块
+3. 图示统一使用 `mermaid`
+4. 多步命令统一用 `# 1)`、`# 2)` 注释标明步骤目的
+5. 使用示例默认优先覆盖高频、真实、接近日常工作流的场景
+6. 高风险命令示例后必须补充适用场景或风险提示，避免只给命令不解释后果
+
 ## 命令关系速览
 
 下面几张图不是为了替代具体命令条目，而是为了帮助你先快速判断“当前问题属于哪一类命令”。
@@ -108,11 +119,18 @@ git init [--bare] [-b <branch-name>] [<directory>]
 #### 使用示例
 
 ```bash
+# 在当前目录初始化一个新仓库
 git init
 ```
 
 ```bash
+# 初始化仓库，并把默认分支直接设为 main
 git init -b main
+```
+
+```bash
+# 为共享仓库或镜像仓库初始化裸仓库
+git init --bare
 ```
 
 #### 注意事项
@@ -147,14 +165,17 @@ git add [<options>] [--] <pathspec>...
 #### 使用示例
 
 ```bash
+# 只把一个明确文件加入暂存区
 git add README.md
 ```
 
 ```bash
+# 把当前目录下相关改动整体加入暂存区
 git add .
 ```
 
 ```bash
+# 交互式选择部分代码片段进入暂存区
 git add -p
 ```
 
@@ -189,11 +210,19 @@ git commit [-m <msg>] [--amend] [<options>]
 #### 使用示例
 
 ```bash
+# 提交已经进入暂存区的改动
 git commit -m "docs: add git basics notes"
 ```
 
 ```bash
+# 自动提交已跟踪文件的改动，但不会带上新文件
 git commit -a -m "fix: update tracked files"
+```
+
+```bash
+# 在提交前先看一眼暂存区，再提交
+git diff --cached
+git commit -m "feat(auth): add login validation"
 ```
 
 #### 注意事项
@@ -226,10 +255,12 @@ git status [<options>]
 #### 使用示例
 
 ```bash
+# 查看完整状态
 git status
 ```
 
 ```bash
+# 用简洁格式快速排障
 git status -sb
 ```
 
@@ -463,14 +494,17 @@ git clone [<options>] [--] <repo> [<dir>]
 #### 使用示例
 
 ```bash
+# 用 SSH 克隆一个完整仓库
 git clone git@github.com:your-name/git-demo.git
 ```
 
 ```bash
+# 只克隆 main 分支，减少无关分支噪音
 git clone -b main --single-branch git@github.com:your-name/git-demo.git
 ```
 
 ```bash
+# 浅克隆最近一层历史，适合快速拉起只读环境
 git clone --depth 1 git@github.com:your-name/git-demo.git
 ```
 
@@ -505,14 +539,17 @@ git remote [subcommand] [<options>]
 #### 使用示例
 
 ```bash
+# 查看当前所有远程及地址
 git remote -v
 ```
 
 ```bash
+# 给本地仓库补一个默认远程 origin
 git remote add origin git@github.com:your-name/git-demo.git
 ```
 
 ```bash
+# 远程地址写错时，直接修改 origin 地址
 git remote set-url origin git@github.com:your-name/git-demo.git
 ```
 
@@ -547,14 +584,17 @@ git fetch [<options>] [<repository> [<refspec>...]]
 #### 使用示例
 
 ```bash
+# 拿远程更新，但先不自动整合
 git fetch
 ```
 
 ```bash
+# 同步远程状态，并清理失效的远程跟踪分支
 git fetch --prune
 ```
 
 ```bash
+# 只获取 origin/main 这条线的最新状态
 git fetch origin main
 ```
 
@@ -588,14 +628,17 @@ git pull [<options>] [<repository> [<refspec>...]]
 #### 使用示例
 
 ```bash
+# 拉取并按默认策略整合远程更新
 git pull
 ```
 
 ```bash
+# 拉取后使用 rebase，保持本地历史更线性
 git pull --rebase
 ```
 
 ```bash
+# 只接受快进更新，不自动生成 merge 结果
 git pull --ff-only
 ```
 
@@ -631,11 +674,18 @@ git push [<options>] [<repository> [<refspec>...]]
 #### 使用示例
 
 ```bash
+# 推送当前分支到默认上游
 git push
 ```
 
 ```bash
+# 首次推送 main，并建立上游关系
 git push -u origin main
+```
+
+```bash
+# 确认自己理解后，再用更安全的方式强推
+git push --force-with-lease origin <branch-name>
 ```
 
 #### 注意事项
@@ -729,14 +779,17 @@ git branch [<options>] [<branch-name>]
 #### 使用示例
 
 ```bash
+# 查看本地分支列表
 git branch
 ```
 
 ```bash
+# 只看当前分支名
 git branch --show-current
 ```
 
 ```bash
+# 删除已经合并完成的分支
 git branch -d feature/user-login
 ```
 
@@ -770,11 +823,18 @@ git switch [<options>] [<branch>]
 #### 使用示例
 
 ```bash
+# 切回主线分支
 git switch main
 ```
 
 ```bash
+# 创建并切换到功能分支
 git switch -c feature/user-login
+```
+
+```bash
+# 临时进入 detached HEAD 查看某个提交
+git switch --detach <commit-hash>
 ```
 
 #### 注意事项
@@ -845,11 +905,18 @@ git merge [<options>] [<commit>...]
 #### 使用示例
 
 ```bash
+# 把功能分支整合进当前分支
 git merge feature/user-login
 ```
 
 ```bash
+# 即使可以快进，也保留一次显式合并提交
 git merge --no-ff feature/user-login
+```
+
+```bash
+# 合并过程出问题时，直接中止本次 merge
+git merge --abort
 ```
 
 #### 注意事项
@@ -882,14 +949,17 @@ git rebase [<options>] [<upstream> [<branch>]]
 #### 使用示例
 
 ```bash
+# 把当前分支重放到 main 之后
 git rebase main
 ```
 
 ```bash
+# 交互式整理最近 3 次提交
 git rebase -i HEAD~3
 ```
 
 ```bash
+# rebase 过程中如果发现不该继续，直接中止
 git rebase --abort
 ```
 
@@ -928,15 +998,23 @@ git stash list
 #### 使用示例
 
 ```bash
+# 先把当前修改保存起来，并写清楚说明
 git stash push -m "wip: login form"
 ```
 
 ```bash
+# 查看 stash 列表
 git stash list
 ```
 
 ```bash
+# 恢复最近一次 stash，并尝试从列表里删除
 git stash pop
+```
+
+```bash
+# 包含未跟踪文件一起保存，更适合临时切去处理线上问题
+git stash push -u -m "wip: release hotfix"
 ```
 
 #### 注意事项
@@ -1036,14 +1114,17 @@ git reset [<tree-ish>] [--] <pathspec>...
 #### 使用示例
 
 ```bash
+# 回退一个提交，但保留改动在暂存区
 git reset --soft HEAD~1
 ```
 
 ```bash
+# 回退一个提交，并把改动退回工作区
 git reset --mixed HEAD~1
 ```
 
 ```bash
+# 高风险：直接丢弃工作区和暂存区改动
 git reset --hard HEAD~1
 ```
 
@@ -1078,10 +1159,12 @@ git revert [<options>] <commit>...
 #### 使用示例
 
 ```bash
+# 用一个新提交撤销最近一次提交
 git revert HEAD
 ```
 
 ```bash
+# 先应用反向改动，确认后再统一提交
 git revert --no-commit <commit-hash>
 ```
 
@@ -1115,14 +1198,17 @@ git restore [<options>] [--source=<branch>] <file>...
 #### 使用示例
 
 ```bash
+# 恢复工作区文件内容
 git restore README.md
 ```
 
 ```bash
+# 把文件从暂存区拿出来，但保留工作区改动
 git restore --staged README.md
 ```
 
 ```bash
+# 从历史提交恢复指定文件版本
 git restore --source=HEAD~1 README.md
 ```
 
@@ -1155,10 +1241,12 @@ git reflog [show] [<ref>]
 #### 使用示例
 
 ```bash
+# 查看 HEAD 的移动历史
 git reflog
 ```
 
 ```bash
+# 明确查看 HEAD 这条引用的 reflog
 git reflog show HEAD
 ```
 
@@ -1192,10 +1280,12 @@ git commit --amend [<options>]
 #### 使用示例
 
 ```bash
+# 直接修改最近一次提交的信息
 git commit --amend -m "docs: refine git notes"
 ```
 
 ```bash
+# 先补暂存区内容，再把它并入最近一次提交
 git add README.md
 git commit --amend --no-edit
 ```
@@ -1233,15 +1323,23 @@ git tag -d <tagname>
 #### 使用示例
 
 ```bash
+# 查看本地标签列表
 git tag
 ```
 
 ```bash
+# 为正式发布创建附注标签
 git tag -a v1.0.0 -m "Release version 1.0.0"
 ```
 
 ```bash
+# 创建轻量标签，适合临时标记
 git tag v1.0.0
+```
+
+```bash
+# 删除本地标签
+git tag -d v1.0.0
 ```
 
 #### 注意事项
