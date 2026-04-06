@@ -47,6 +47,17 @@
 
 如果某条规则找不到公开依据，就不会写成“腾讯/字节/谷歌都是这么做的”这种确定表述，而只会写成更保守的“适合个人训练的工程化做法”。
 
+## 术语约定
+
+为与其他 Part 保持一致，本手册默认统一使用以下写法：
+
+- `工作区`：必要时补充 `working tree / working directory`
+- `暂存区`：必要时补充 `index / staging area`
+- `本地仓库`、`远程仓库`：正文优先使用中文，不混写成 `repository`
+- `提交`、`分支`：正文优先使用中文，只在命令、报错、对象模型中保留 `commit`、`branch`
+- `切换分支`：正文优先这样表述；涉及 `git checkout` 时，再明确写“检出（checkout）”
+- `拉取请求（Pull Request, PR）/ 合并请求（Merge Request, MR）`：首次出现写全，后文可简写为 `PR / MR`
+
 ## 分支管理规范
 
 ### 1. 默认分支模型
@@ -352,7 +363,7 @@ chore: update editorconfig
 - `推荐做法`：大改动先开 issue，至少先沟通目标、边界和影响范围
 - `推荐做法`：一个分支只处理一个主题，避免“顺手再改一点”
 
-### 2. 提交与 PR / MR
+### 2. 提交与拉取请求 / 合并请求（PR / MR）
 
 - `硬性约束`：日常功能和常规修复优先提交到 `develop`
 - `硬性约束`：不要直接把日常开发改动推向 `main`
@@ -373,10 +384,10 @@ chore: update editorconfig
 
 ```text
 fork repository
--> create branch
--> commit and push
--> open PR
--> review and update
+-> 创建分支
+-> 提交并推送
+-> 发起 PR
+-> 评审并更新
 -> merge
 ```
 
