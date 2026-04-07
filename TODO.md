@@ -90,7 +90,7 @@
 - [x] 统一四个 Part 的术语写法
 - [x] 为 `TODO.md` 与三份手册补充文件内索引
 - [x] 新增 `docs/README.md` 目录导航页
-- [ ] 建立跨文档交叉引用
+- [x] 建立跨文档交叉引用
 - [x] 统一代码块风格与命令示例格式
 - [ ] 统一风险提示写法
 - [ ] 统一“Windows / macOS / Linux”平台差异写法
@@ -166,6 +166,7 @@
 
 - [x] 为 `TODO.md`、`docs/Git学习手册.md`、`docs/Git个人使用规范.md`、`docs/Git实用拓展手册.md` 补充文件内索引
 - [x] 新增 `docs/README.md` 作为 `docs/` 目录导航页
+- [x] 为四本手册与 `docs/README.md` 建立跨文档交叉引用
 
 ## 维护规则
 
