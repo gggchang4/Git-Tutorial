@@ -9,6 +9,7 @@
 - [🧠 术语约定](#术语约定)
 - [💻 代码示例约定](#代码示例约定)
 - [⚠️ 风险提示写法约定](#风险提示写法约定)
+- [🖥️ 平台差异写法约定](#平台差异写法约定)
 - [1️⃣ Git 简介与安装配置](#1-git-简介与安装配置)
 - [2️⃣ 本地仓库核心操作](#2-本地仓库核心操作)
 - [3️⃣ 远程仓库基础交互](#3-远程仓库基础交互)
@@ -94,6 +95,16 @@
 - `风险提示：` 只在存在误删、历史改写、共享分支影响、敏感信息泄漏、发布回归或不可逆后果时使用
 - `风险提示：` 后优先写清风险级别、触发条件、可能后果和更稳妥的做法
 - 如果只是普通补充说明，不用把每一条都写成 `风险提示：`
+
+## 平台差异写法约定
+
+为与其他 Part 保持一致，本手册默认这样表达平台和命令环境差异：
+
+- 平台名称统一写作 `Windows / macOS / Linux`
+- Shell 环境统一写作 `Bash / Git Bash / PowerShell`；只有某一种环境可用时，再单独写 `适用环境：...`
+- 可直接执行的通用命令默认使用 `bash` 代码块；PowerShell 专属命令才改用 `powershell` 代码块
+- 同一动作如果存在平台差异，优先按“默认命令 -> 平台替代写法 -> 说明 / 风险提示”编排，而不是把整段流程重复写三遍
+- 如果差异只体现在安装入口、文件路径、查看命令或剪贴板命令上，只补差异点，不改写主体流程
 
 ## 1. Git 简介与安装配置
 
@@ -217,7 +228,7 @@ flowchart TD
 - `--global` 会影响当前用户下的所有 Git 仓库，配置前先确认你是否真的想全局生效。
 - `user.email` 会进入提交历史；如果仓库会公开，请使用你愿意公开展示的邮箱。
 - `init.defaultBranch` 只影响新初始化的仓库，不会自动改掉已经存在仓库的分支名。
-- Windows、macOS、Linux 的安装方式不同，但安装完成后的大多数 Git 命令是一致的。
+- Windows / macOS / Linux 的安装方式不同，但安装完成后的大多数 Git 命令是一致的。
 - 如果 `code --wait` 无法使用，通常说明 VS Code 命令行工具还没有加入 PATH。
 
 ### 参考链接
@@ -356,6 +367,29 @@ git log --oneline --graph --decorate -5
 
 - `git status -sb` 能帮助你第一时间知道当前在哪个分支、工作区是否干净
 - `git diff` 和 `git diff --cached` 配合使用，能避免“我明明改了，为什么没进 commit”这类问题
+
+执行结果示例：
+
+```text
+$ git status -sb
+## main
+ M README.md
+?? notes.md
+
+$ git diff --cached
+diff --git a/README.md b/README.md
++ 新增一段准备提交的说明
+
+$ git log --oneline --graph --decorate -5
+* a1b2c3d (HEAD -> main) docs: add git basics notes
+* 9f8e7d6 docs: add initial project docs
+```
+
+如何解读：
+
+- ` M README.md` 表示这个文件已经修改，但还没进入暂存区
+- `?? notes.md` 表示这是一个尚未跟踪的新文件
+- `HEAD -> main` 表示你当前正位于 `main` 分支的最新提交上
 
 ### 图示
 
@@ -517,6 +551,27 @@ git pull --ff-only
 - `git pull` 不是单纯“下载最新代码”，它会直接尝试整合
 - 如果你想先观察再整合，生产中更稳的顺序通常是 `fetch -> 看状态 -> 再 pull`
 
+执行结果示例：
+
+```text
+$ git fetch origin
+From github.com:your-name/git-demo
+   7ac41d2..91bf204  main       -> origin/main
+
+$ git status -sb
+## main...origin/main [behind 2]
+
+$ git log --oneline --graph --decorate --all -6
+* 91bf204 (origin/main, origin/HEAD) docs: add collaboration notes
+* 7ac41d2 docs: refine setup guide
+* 41d0ef8 (HEAD -> main) docs: local draft before sync
+```
+
+如何解读：
+
+- `behind 2` 说明当前分支落后于远程上游 2 个提交
+- 这时先看日志再决定 `pull --ff-only`、`pull --rebase` 或先整理本地改动，会比直接盲拉更稳
+
 #### 4. GitHub SSH 最小配置流程
 
 适用场景：
@@ -548,6 +603,21 @@ flowchart LR
     B -->|git pull| A
     B -->|git clone| C[新的本地仓库]
     A -. git remote -v .-> B
+```
+
+补充一个更贴近日常同步决策的图示：
+
+```mermaid
+flowchart TD
+    A[开始工作前] --> B[git fetch origin]
+    B --> C{git status -sb 是否落后?}
+    C -- 否 --> D[继续本地开发]
+    C -- 是 --> E[查看 git log --graph]
+    E --> F{能否快进?}
+    F -- 能 --> G[git pull --ff-only]
+    F -- 不能 --> H[先整理本地改动\n再决定 merge / rebase]
+    G --> I[进入开发]
+    H --> I
 ```
 
 ### 风险与注意事项

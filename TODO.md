@@ -105,10 +105,10 @@
 - [x] 建立跨文档交叉引用
 - [x] 统一代码块风格与命令示例格式
 - [x] 统一风险提示写法
-- [ ] 统一“Windows / macOS / Linux”平台差异写法
-- [ ] 核验公开资料链接的有效性
-- [ ] 补充 Mermaid 图示规划
-- [ ] 规划截图和图片素材清单
+- [x] 统一“Windows / macOS / Linux”平台差异写法
+- [x] 核验公开资料链接的有效性
+- [x] 补充 Mermaid 图示规划
+- [x] 规划截图和图片素材清单
 
 ## 维护与待确认
 
@@ -122,9 +122,9 @@
 ## 后续想法
 
 - [ ] 为每个 Part 增加“阅读建议”或“适合谁先读”说明
-- [ ] 为关键章节补充 Mermaid 图
-- [ ] 为常见命令补充截图或执行结果示例
-- [ ] 在 `assets/` 中建立更细的素材命名规范
+- [x] 为关键章节补充 Mermaid 图
+- [x] 为常见命令补充截图或执行结果示例
+- [x] 在 `assets/` 中建立更细的素材命名规范
 - [ ] 为高频章节增加“常见误区”小节
 
 ## 迭代记录
@@ -199,6 +199,10 @@
 - [x] 用 Google、腾讯、字节公开来源重写公司团队 SOP 的边界说明与团队范式映射，避免把公开实践写成未公开内部制度
 - [x] 为 `README.md`、`docs/Git学习手册.md`、`docs/Git Reference手册.md`、`docs/Git个人使用规范.md` 统一补齐风险提示写法约定
 - [x] 为 `docs/Git个人使用规范.md` 中的三套 SOP 新增 Mermaid 流程图，补强个人 / 小团队 / 公司团队三种流程的可视化表达
+- [x] 为 `README.md`、`docs/Git学习手册.md`、`docs/Git Reference手册.md`、`docs/Git个人使用规范.md`、`docs/Git实用拓展手册.md` 统一补齐平台差异写法约定，并将平台名称统一为 `Windows / macOS / Linux`
+- [x] 批量核验仓库公开资料链接有效性，确认当前引用均可访问，并将 Google Open Source、GitHub Desktop Docs 等链接更新为更稳定的官方地址
+- [x] 在 `assets/README.md` 补充 Mermaid 图示规划、截图和图片素材清单，以及更细的素材命名与交付约定
+- [x] 为 `docs/Git学习手册.md`、`docs/Git Reference手册.md`、`docs/Git实用拓展手册.md` 补充首批关键 Mermaid 图，并为 `git status`、`git log`、`git fetch`、`pre-commit` 等高频命令补执行结果示例
 
 ## 维护规则
 

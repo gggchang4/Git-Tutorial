@@ -36,6 +36,16 @@
 - `风险提示：` 后优先写明风险级别、触发条件、可能后果和更稳妥的替代动作
 - 如果只是普通参数提醒或兼容性补充，继续写在 `注意事项` 中，不强行升级为风险提示
 
+## 平台差异写法约定
+
+为与其他 Part 保持一致，本手册默认这样表达平台和命令环境差异：
+
+- 平台名称统一写作 `Windows / macOS / Linux`
+- Shell 环境统一写作 `Bash / Git Bash / PowerShell`；只有某一种环境可用时，再单独写 `适用环境：...`
+- 可直接执行的通用命令默认使用 `bash` 代码块；PowerShell 专属命令才单独改用 `powershell`
+- 同一命令如果只在某个平台补一个替代写法，优先写在 `说明` 或 `注意事项` 中，不为轻微差异拆成三套示例
+- 路径、家目录、环境变量等差异优先点明替代写法，例如 `$HOME`、`~`、`%USERPROFILE%` 的对应关系
+
 ## 术语约定
 
 为与其他 Part 保持一致，本手册默认统一使用以下写法：
@@ -294,6 +304,23 @@ git status
 git status -sb
 ```
 
+#### 执行结果示例
+
+```text
+$ git status -sb
+## feature/docs-structure...origin/feature/docs-structure
+ M README.md
+M  docs/Git学习手册.md
+?? assets/screenshots/part1-status-terminal-cross-platform.png
+```
+
+快速判断：
+
+- 开头的 `##` 行用于看当前分支和上游关系
+- 左侧有空格的 ` M` 表示工作区已改、暂存区还没收进去
+- 左右都有状态位时，要区分“已暂存”和“未暂存”是不是同一个文件的两段变化
+- `??` 表示新文件尚未被 Git 跟踪
+
 #### 注意事项
 
 - 遇到 Git 问题时，优先先看 `git status`。
@@ -331,6 +358,22 @@ git log --oneline --graph --decorate
 ```bash
 git log -- README.md
 ```
+
+#### 执行结果示例
+
+```text
+$ git log --oneline --graph --decorate
+* c82b5d1 (HEAD -> feature/docs-structure) docs: add platform wording guide
+* 5a4bc1e docs: refine assets planning
+* 91bf204 (origin/main, main) docs: add collaboration notes
+* 7ac41d2 docs: refine setup guide
+```
+
+快速判断：
+
+- `HEAD -> feature/docs-structure` 表示你当前所在分支指向的最新提交
+- `origin/main, main` 出现在同一提交上，通常表示本地 `main` 和远程 `origin/main` 已对齐
+- 配合 `--graph` 时，优先先看线条结构，再看提交信息，能更快理解分支关系
 
 #### 注意事项
 
@@ -627,6 +670,21 @@ git fetch --prune
 # 只获取 origin/main 这条线的最新状态
 git fetch origin main
 ```
+
+#### 执行结果示例
+
+```text
+$ git fetch --prune
+From github.com:your-name/git-demo
+ - [deleted]         (none)     -> origin/feature/old-branch
+   7ac41d2..91bf204  main       -> origin/main
+```
+
+快速判断：
+
+- `- [deleted]` 说明远程某个分支已经删除，本地远程跟踪引用也被一起清理
+- `7ac41d2..91bf204` 表示 `origin/main` 这条远程跟踪线更新到了新的提交范围
+- `fetch` 只更新“你对远程状态的认知”，不会直接改当前分支工作内容
 
 #### 注意事项
 

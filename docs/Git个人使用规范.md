@@ -7,6 +7,7 @@
 - [🧠 术语约定](#术语约定)
 - [💻 代码示例约定](#代码示例约定)
 - [⚠️ 风险提示写法约定](#风险提示写法约定)
+- [🖥️ 平台差异写法约定](#平台差异写法约定)
 - [🔀 交叉阅读入口](#交叉阅读入口-)
 - [🌿 分支管理规范](#分支管理规范)
 - [✅ 提交规范](#提交规范)
@@ -108,6 +109,16 @@
 - 可能后果：会影响什么
 - 稳妥做法：在继续前应先做什么
 ```
+
+## 平台差异写法约定
+
+为统一整份仓库的平台表达风格，本手册默认按下面的方式描述平台和环境差异：
+
+- 平台名称统一写作 `Windows / macOS / Linux`
+- Shell 环境统一写作 `Bash / Git Bash / PowerShell`；只有某一种环境可用时，再单独写 `适用环境：...`
+- 可直接执行的通用 Git 命令默认使用 `bash` 代码块；PowerShell 专属命令、路径或管道再单独给出 `powershell` 示例
+- 同一套 SOP 如果只是命令入口或路径写法不同，优先保留一条主流程，再补平台替代动作，不把流程拆成三份重复版本
+- 只有在安装、认证、证书、文件系统大小写或 shell 行为明显影响结果时，才把平台差异上升为独立步骤或风险提示
 
 ## 交叉阅读入口 🔀
 
@@ -1615,7 +1626,7 @@ git push -u origin feature/fix-doc-typo
 
 - [Git 官方文档](https://git-scm.com/doc)
 - [Google Style Guides](https://google.github.io/styleguide/)
-- [Google Open Source - Patching](https://opensource.google/docs/patching/)
+- [Google Open Source - Patching](https://opensource.google/documentation/reference/patching)
 
 ### 开源项目公开规范
 
