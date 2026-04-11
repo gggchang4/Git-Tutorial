@@ -53,6 +53,20 @@ readme-parts-overview.svg
 | P1 | `docs/Git实用拓展手册.md` | 工具选型决策图、钩子执行链、敏感信息防护流 | 帮助选型和接入 | `part4-tooling-decision-flow-cross-platform.mmd` | 已完成首批正文内嵌 Mermaid |
 | P2 | `docs/Git个人使用规范.md` | 分支策略选型图、异常分流图 | 补充 SOP 外围决策场景 | `part3-branch-strategy-decision-cross-platform.mmd` | 待规划 |
 
+## AI 图例 Prompt 清单
+
+为避免后续补图时每次重新组织提示词，仓库内已新增一份可直接复用的章节级 prompt 清单：
+
+- [Illustration Prompt Pack](./references/illustration-prompt-pack.md)
+
+建议使用方式：
+
+- 优先复用清单中的文件名映射，保证后续素材能直接落到约定路径
+- 统一复用“全局风格前缀 + 统一补充约束 + 章节 prompt + 负面提示词”的组合
+- README 总览图优先 `16:9`，命令关系图优先 `4:3`，SOP / 规范看板优先 `3:2`
+- 章节配图尽量保持“少文字、强结构、强关系表达”，避免做成海报式装饰图
+- 若图最终需要进 README 或正文，优先产出 SVG 风格的矢量插图
+
 ## 截图和图片素材清单
 
 截图与图片素材按“先规划、后采集、统一脱敏”的方式维护，避免后续补图时出现尺寸、主题和信息暴露不一致。

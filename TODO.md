@@ -109,6 +109,7 @@
 - [x] 核验公开资料链接的有效性
 - [x] 补充 Mermaid 图示规划
 - [x] 规划截图和图片素材清单
+- [x] 沉淀章节级 AI 图例 prompt 清单并统一文件名映射
 
 ## 维护与待确认
 
@@ -128,6 +129,12 @@
 - [ ] 为高频章节增加“常见误区”小节
 
 ## 迭代记录
+
+### 2026-04-12
+
+- [x] 新增 `assets/references/illustration-prompt-pack.md`，沉淀 README 与四个 Part 的章节级图例 prompt
+- [x] 在 `assets/README.md` 增加 AI 图例 prompt 清单入口与使用约定
+- [x] 将章节配图 prompt 统一绑定到约定的 ASCII 文件名，便于后续直接生成和落盘
 
 ### 2026-04-04
 
