@@ -118,6 +118,24 @@
 | VS Code 内置 Git | IDE 内置 | 日常就在 VS Code 工作的人 | 不离开编辑器完成常见 Git 操作 |
 | GitLens | VS Code 扩展 | 想在编辑器里看历史和责任归属的人 | 强化 blame、历史、提交关系和工作流可见性 |
 
+### 1.1.1 工具选型决策图
+
+```mermaid
+flowchart TD
+    A[你想补 Git 工具链] --> B{主要痛点是什么?}
+    B -- 少记命令 / 降低门槛 --> C[GitHub Desktop / Sourcetree]
+    B -- 不离开编辑器完成操作 --> D[VS Code 内置 Git]
+    B -- 想在编辑器里看历史与 blame --> E[GitLens]
+    B -- 想把平台协作搬到终端 --> F[GitHub CLI gh]
+    B -- 想把检查前置到提交前 --> G[pre-commit / Husky]
+    B -- 想挡住大文件与敏感信息风险 --> H[Git LFS / git-secrets / Gitleaks]
+```
+
+读图建议：
+
+- 先按“当前最痛的高频问题”选第一件工具，不要一开始全装
+- GUI、编辑器增强、终端协作、自动化检查和安全治理是五条不同路径，混在一起只会增加维护成本
+
 ### 1.2 GitHub Desktop
 
 #### 是什么
@@ -547,6 +565,20 @@ printf '\nnpm run lint\n' >> .husky/pre-commit
 - 提交信息格式校验
 - 简单敏感信息扫描
 
+### 3.4.1 自动化接入最小流程图
+
+```mermaid
+flowchart TD
+    A[仓库还没有自动化检查] --> B{仓库生态是什么?}
+    B -- 多语言 / 通用仓库 --> C[优先 pre-commit]
+    B -- Node.js / 前端仓库 --> D[优先 Husky 或 pre-commit]
+    C --> E[先接格式化 / lint / 轻量扫描]
+    D --> E
+    E --> F[本地先执行一次全量检查]
+    F --> G[把配置文件纳入版本控制]
+    G --> H[再决定是否增加 commit-msg / pre-push / CI 兜底]
+```
+
 ### 3.5 Git 钩子与 CI 的边界
 
 这一点很重要：
@@ -560,6 +592,31 @@ printf '\nnpm run lint\n' >> .husky/pre-commit
 - CI 再做更完整的最终校验
 
 这也和 Part 3 的“提交前先自检，再进入共享历史”的原则是一致的。
+
+```mermaid
+flowchart LR
+    A[本地开发] --> B[pre-commit / Husky]
+    B -->|格式化 lint 轻测 敏感信息初筛| C[本地 commit]
+    C --> D[push / PR]
+    D --> E[CI 检查]
+    E -->|完整测试 构建 安全扫描| F[合并 / 发布]
+```
+
+执行结果示例：
+
+```text
+$ pre-commit run --all-files
+trim trailing whitespace.................................................Passed
+end-of-file-fixer.......................................................Passed
+check yaml..............................................................Passed
+gitleaks................................................................Passed
+```
+
+如何解读：
+
+- 本地第一次接入时，优先先手动跑 `pre-commit run --all-files`
+- 如果这里已经失败，就不要急着继续提交，先把规则和仓库现状对齐
+- 本地通过不代表 CI 一定通过，但能显著减少“低级问题刚 push 就红”的情况
 
 ## 4. 大文件与敏感信息防护
 

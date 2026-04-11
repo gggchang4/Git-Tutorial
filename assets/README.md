@@ -48,9 +48,9 @@ readme-parts-overview.svg
 |------|------|------|------|------|------|
 | P0 | `README.md` | 四个 Part 的职责关系图 | 仓库首页快速导览 | `readme-parts-overview.svg` | 已完成 |
 | P0 | `docs/Git个人使用规范.md` | 个人 / 小团队 / 公司团队三套 SOP 主流程图 | 规范流程可视化 | `part3-personal-flow-cross-platform.mmd` 等 | 已完成正文内嵌 Mermaid |
-| P1 | `docs/Git学习手册.md` | 本地提交闭环、分支合并 / rebase、冲突解决、回滚恢复 | 帮助学习者建立阶段感 | `part1-commit-loop-flow-cross-platform.mmd` | 待补充 |
-| P1 | `docs/Git Reference手册.md` | `add / commit / restore / reset` 关系图、远程同步关系图 | 强化速查命令关系 | `part2-history-command-map-cross-platform.mmd` | 待补充 |
-| P1 | `docs/Git实用拓展手册.md` | 工具选型决策图、钩子执行链、敏感信息防护流 | 帮助选型和接入 | `part4-tooling-decision-flow-cross-platform.mmd` | 待补充 |
+| P1 | `docs/Git学习手册.md` | 本地提交闭环、远程同步、分支合并 / rebase、冲突解决、回滚恢复 | 帮助学习者建立阶段感 | `part1-commit-loop-flow-cross-platform.mmd` | 已完成正文内嵌 Mermaid |
+| P1 | `docs/Git Reference手册.md` | `add / commit / restore / reset` 关系图、远程同步关系图 | 强化速查命令关系 | `part2-history-command-map-cross-platform.mmd` | 已完成正文内嵌 Mermaid |
+| P1 | `docs/Git实用拓展手册.md` | 工具选型决策图、钩子执行链、敏感信息防护流 | 帮助选型和接入 | `part4-tooling-decision-flow-cross-platform.mmd` | 已完成首批正文内嵌 Mermaid |
 | P2 | `docs/Git个人使用规范.md` | 分支策略选型图、异常分流图 | 补充 SOP 外围决策场景 | `part3-branch-strategy-decision-cross-platform.mmd` | 待规划 |
 
 ## 截图和图片素材清单

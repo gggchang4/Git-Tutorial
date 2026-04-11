@@ -304,6 +304,23 @@ git status
 git status -sb
 ```
 
+#### 执行结果示例
+
+```text
+$ git status -sb
+## feature/docs-structure...origin/feature/docs-structure
+ M README.md
+M  docs/Git学习手册.md
+?? assets/screenshots/part1-status-terminal-cross-platform.png
+```
+
+快速判断：
+
+- 开头的 `##` 行用于看当前分支和上游关系
+- 左侧有空格的 ` M` 表示工作区已改、暂存区还没收进去
+- 左右都有状态位时，要区分“已暂存”和“未暂存”是不是同一个文件的两段变化
+- `??` 表示新文件尚未被 Git 跟踪
+
 #### 注意事项
 
 - 遇到 Git 问题时，优先先看 `git status`。
@@ -341,6 +358,22 @@ git log --oneline --graph --decorate
 ```bash
 git log -- README.md
 ```
+
+#### 执行结果示例
+
+```text
+$ git log --oneline --graph --decorate
+* c82b5d1 (HEAD -> feature/docs-structure) docs: add platform wording guide
+* 5a4bc1e docs: refine assets planning
+* 91bf204 (origin/main, main) docs: add collaboration notes
+* 7ac41d2 docs: refine setup guide
+```
+
+快速判断：
+
+- `HEAD -> feature/docs-structure` 表示你当前所在分支指向的最新提交
+- `origin/main, main` 出现在同一提交上，通常表示本地 `main` 和远程 `origin/main` 已对齐
+- 配合 `--graph` 时，优先先看线条结构，再看提交信息，能更快理解分支关系
 
 #### 注意事项
 
@@ -637,6 +670,21 @@ git fetch --prune
 # 只获取 origin/main 这条线的最新状态
 git fetch origin main
 ```
+
+#### 执行结果示例
+
+```text
+$ git fetch --prune
+From github.com:your-name/git-demo
+ - [deleted]         (none)     -> origin/feature/old-branch
+   7ac41d2..91bf204  main       -> origin/main
+```
+
+快速判断：
+
+- `- [deleted]` 说明远程某个分支已经删除，本地远程跟踪引用也被一起清理
+- `7ac41d2..91bf204` 表示 `origin/main` 这条远程跟踪线更新到了新的提交范围
+- `fetch` 只更新“你对远程状态的认知”，不会直接改当前分支工作内容
 
 #### 注意事项
 

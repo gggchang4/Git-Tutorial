@@ -368,6 +368,29 @@ git log --oneline --graph --decorate -5
 - `git status -sb` 能帮助你第一时间知道当前在哪个分支、工作区是否干净
 - `git diff` 和 `git diff --cached` 配合使用，能避免“我明明改了，为什么没进 commit”这类问题
 
+执行结果示例：
+
+```text
+$ git status -sb
+## main
+ M README.md
+?? notes.md
+
+$ git diff --cached
+diff --git a/README.md b/README.md
++ 新增一段准备提交的说明
+
+$ git log --oneline --graph --decorate -5
+* a1b2c3d (HEAD -> main) docs: add git basics notes
+* 9f8e7d6 docs: add initial project docs
+```
+
+如何解读：
+
+- ` M README.md` 表示这个文件已经修改，但还没进入暂存区
+- `?? notes.md` 表示这是一个尚未跟踪的新文件
+- `HEAD -> main` 表示你当前正位于 `main` 分支的最新提交上
+
 ### 图示
 
 ```mermaid
@@ -528,6 +551,27 @@ git pull --ff-only
 - `git pull` 不是单纯“下载最新代码”，它会直接尝试整合
 - 如果你想先观察再整合，生产中更稳的顺序通常是 `fetch -> 看状态 -> 再 pull`
 
+执行结果示例：
+
+```text
+$ git fetch origin
+From github.com:your-name/git-demo
+   7ac41d2..91bf204  main       -> origin/main
+
+$ git status -sb
+## main...origin/main [behind 2]
+
+$ git log --oneline --graph --decorate --all -6
+* 91bf204 (origin/main, origin/HEAD) docs: add collaboration notes
+* 7ac41d2 docs: refine setup guide
+* 41d0ef8 (HEAD -> main) docs: local draft before sync
+```
+
+如何解读：
+
+- `behind 2` 说明当前分支落后于远程上游 2 个提交
+- 这时先看日志再决定 `pull --ff-only`、`pull --rebase` 或先整理本地改动，会比直接盲拉更稳
+
 #### 4. GitHub SSH 最小配置流程
 
 适用场景：
@@ -559,6 +603,21 @@ flowchart LR
     B -->|git pull| A
     B -->|git clone| C[新的本地仓库]
     A -. git remote -v .-> B
+```
+
+补充一个更贴近日常同步决策的图示：
+
+```mermaid
+flowchart TD
+    A[开始工作前] --> B[git fetch origin]
+    B --> C{git status -sb 是否落后?}
+    C -- 否 --> D[继续本地开发]
+    C -- 是 --> E[查看 git log --graph]
+    E --> F{能否快进?}
+    F -- 能 --> G[git pull --ff-only]
+    F -- 不能 --> H[先整理本地改动\n再决定 merge / rebase]
+    G --> I[进入开发]
+    H --> I
 ```
 
 ### 风险与注意事项
