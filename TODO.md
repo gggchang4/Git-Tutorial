@@ -135,6 +135,8 @@
 - [x] 新增 `assets/references/illustration-prompt-pack.md`，沉淀 README 与四个 Part 的章节级图例 prompt
 - [x] 在 `assets/README.md` 增加 AI 图例 prompt 清单入口与使用约定
 - [x] 将章节配图 prompt 统一绑定到约定的 ASCII 文件名，便于后续直接生成和落盘
+- [x] 新增 `readme-parts-overview.svg`、`part1-git-setup-overview.svg`、`part1-local-workflow-flow.svg`、`part1-remote-sync-flow.svg` 首批矢量图例
+- [x] 将 `README.md` 的四个 Part 总览图切换为新版矢量图例
 
 ### 2026-04-04
 

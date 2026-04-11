@@ -1,0 +1,86 @@
+<svg width="1440" height="560" viewBox="0 0 1440 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="88" y1="40" x2="1352" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFD"/>
+      <stop offset="1" stop-color="#EEF3F7"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="98" y1="92" x2="1342" y2="92" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="160" y1="348" x2="1280" y2="348" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316"/>
+      <stop offset="0.52" stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1440" height="560" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="560" rx="36" fill="url(#bg)"/>
+  <circle cx="1302" cy="108" r="82" fill="#FFFFFF" fill-opacity="0.65"/>
+  <circle cx="118" cy="474" r="60" fill="#FFFFFF" fill-opacity="0.55"/>
+  <text x="1280" y="118" fill="#0F172A" fill-opacity="0.08" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700" text-anchor="middle">GGG</text>
+
+  <g filter="url(#shadow)">
+    <rect x="98" y="72" width="1244" height="96" rx="28" fill="url(#hero)"/>
+  </g>
+  <text x="152" y="118" fill="#FFFFFF" font-family="'Segoe UI', Arial, sans-serif" font-size="32" font-weight="700">Git Handbook Structure</text>
+  <text x="152" y="145" fill="#CBD5E1" font-family="'Segoe UI', Arial, sans-serif" font-size="16">Learn, reference, workflow, tooling</text>
+
+  <g>
+    <rect x="148" y="224" width="252" height="220" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="174" y="248" width="90" height="34" rx="17" fill="#FFF1E7"/>
+    <text x="219" y="270" fill="#C2410C" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">PART 1</text>
+    <text x="174" y="316" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700">Learn Git</text>
+    <text x="174" y="350" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">Concepts, setup, local workflow,</text>
+    <text x="174" y="374" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">remote sync, conflict handling.</text>
+    <circle cx="190" cy="408" r="8" fill="#F97316"/>
+    <circle cx="224" cy="408" r="8" fill="#FB923C"/>
+    <circle cx="258" cy="408" r="8" fill="#FDBA74"/>
+    <path d="M174 408H324" stroke="#FED7AA" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <rect x="438" y="224" width="252" height="220" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="464" y="248" width="90" height="34" rx="17" fill="#E8F6FD"/>
+    <text x="509" y="270" fill="#0369A1" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">PART 2</text>
+    <text x="464" y="316" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700">Reference</text>
+    <text x="464" y="350" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">Command maps, quick lookup,</text>
+    <text x="464" y="374" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">parameters, safety hints.</text>
+    <rect x="464" y="398" width="166" height="18" rx="9" fill="#E0F2FE"/>
+    <rect x="464" y="398" width="98" height="18" rx="9" fill="#38BDF8"/>
+  </g>
+
+  <g>
+    <rect x="728" y="224" width="252" height="220" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="754" y="248" width="90" height="34" rx="17" fill="#ECFDF3"/>
+    <text x="799" y="270" fill="#15803D" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">PART 3</text>
+    <text x="754" y="316" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700">Practice Rules</text>
+    <text x="754" y="350" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">Branch policy, commit quality,</text>
+    <text x="754" y="374" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">SOPs, collaboration norms.</text>
+    <rect x="754" y="396" width="46" height="26" rx="8" fill="#22C55E"/>
+    <rect x="808" y="396" width="74" height="26" rx="8" fill="#86EFAC"/>
+    <rect x="890" y="396" width="58" height="26" rx="8" fill="#DCFCE7"/>
+  </g>
+
+  <g>
+    <rect x="1018" y="224" width="274" height="220" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="1044" y="248" width="90" height="34" rx="17" fill="#F1F5F9"/>
+    <text x="1089" y="270" fill="#334155" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">PART 4</text>
+    <text x="1044" y="316" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700">Tooling</text>
+    <text x="1044" y="350" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">GUI, CLI, hooks, LFS, secrets</text>
+    <text x="1044" y="374" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">protection and high-frequency tips.</text>
+    <rect x="1044" y="396" width="188" height="26" rx="13" fill="#E2E8F0"/>
+    <rect x="1044" y="396" width="62" height="26" rx="13" fill="#94A3B8"/>
+    <rect x="1114" y="396" width="52" height="26" rx="13" fill="#CBD5E1"/>
+    <rect x="1174" y="396" width="58" height="26" rx="13" fill="#F8FAFC"/>
+  </g>
+
+  <path d="M240 470C380 494 512 506 652 506C882 506 1074 468 1236 422" stroke="url(#flow)" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="244" cy="470" r="12" fill="#F97316"/>
+  <circle cx="570" cy="504" r="12" fill="#0EA5E9"/>
+  <circle cx="914" cy="490" r="12" fill="#22C55E"/>
+  <circle cx="1234" cy="422" r="12" fill="#64748B"/>
+</svg>
