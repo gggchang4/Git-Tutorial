@@ -1,0 +1,69 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="86" y1="42" x2="1354" y2="858" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBFCFE"/>
+      <stop offset="1" stop-color="#EEF3F7"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="174" y1="448" x2="1266" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="0.5" stop-color="#F97316"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1440" height="900" rx="40" fill="url(#bg)"/>
+  <text x="1270" y="108" fill="#0F172A" fill-opacity="0.08" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-weight="700" text-anchor="middle">GGG</text>
+  <rect x="92" y="70" width="1256" height="112" rx="30" fill="#111827"/>
+  <text x="144" y="118" fill="#FFFFFF" font-family="'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700">Part 1 · Local Repository Workflow</text>
+  <text x="144" y="151" fill="#CBD5E1" font-family="'Segoe UI', Arial, sans-serif" font-size="18">Understand how changes move through working tree, staging area, and commit history</text>
+
+  <g>
+    <rect x="120" y="248" width="286" height="392" rx="30" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="154" y="282" width="116" height="34" rx="17" fill="#E8F6FD"/>
+    <text x="212" y="304" fill="#0369A1" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">STEP 1</text>
+    <text x="154" y="352" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700">Edit Files</text>
+    <text x="154" y="386" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">Working tree holds current, unstaged changes.</text>
+    <rect x="154" y="428" width="214" height="154" rx="22" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="180" y="462" width="164" height="14" rx="7" fill="#CBD5E1"/>
+    <rect x="180" y="492" width="136" height="14" rx="7" fill="#0EA5E9"/>
+    <rect x="180" y="522" width="92" height="14" rx="7" fill="#7DD3FC"/>
+    <rect x="180" y="552" width="154" height="14" rx="7" fill="#E2E8F0"/>
+  </g>
+
+  <g>
+    <rect x="576" y="248" width="286" height="392" rx="30" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="610" y="282" width="116" height="34" rx="17" fill="#FFF1E7"/>
+    <text x="668" y="304" fill="#C2410C" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">STEP 2</text>
+    <text x="610" y="352" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700">Stage Changes</text>
+    <text x="610" y="386" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">Use add to choose what enters the next commit.</text>
+    <rect x="610" y="428" width="214" height="154" rx="22" fill="#FFF7ED" stroke="#FED7AA" stroke-width="2"/>
+    <rect x="638" y="462" width="152" height="14" rx="7" fill="#FDBA74"/>
+    <rect x="638" y="492" width="124" height="14" rx="7" fill="#F97316"/>
+    <rect x="638" y="522" width="164" height="14" rx="7" fill="#FDBA74"/>
+    <rect x="638" y="552" width="114" height="14" rx="7" fill="#FED7AA"/>
+  </g>
+
+  <g>
+    <rect x="1032" y="248" width="286" height="392" rx="30" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <rect x="1066" y="282" width="116" height="34" rx="17" fill="#ECFDF3"/>
+    <text x="1124" y="304" fill="#15803D" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" text-anchor="middle">STEP 3</text>
+    <text x="1066" y="352" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="30" font-weight="700">Commit Snapshot</text>
+    <text x="1066" y="386" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="16">Create a new history node with a commit message.</text>
+    <rect x="1066" y="428" width="214" height="154" rx="22" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="2"/>
+    <circle cx="1110" cy="505" r="16" fill="#22C55E"/>
+    <circle cx="1178" cy="505" r="16" fill="#86EFAC"/>
+    <circle cx="1246" cy="505" r="16" fill="#BBF7D0"/>
+    <path d="M1110 505H1246" stroke="#4ADE80" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <path d="M406 448H576" stroke="url(#flow)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M862 448H1032" stroke="url(#flow)" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="490" cy="448" r="14" fill="#38BDF8"/>
+  <circle cx="948" cy="448" r="14" fill="#F97316"/>
+
+  <g>
+    <rect x="120" y="694" width="1198" height="124" rx="30" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <text x="156" y="742" fill="#0F172A" font-family="'Segoe UI', Arial, sans-serif" font-size="26" font-weight="700">Commit Loop</text>
+    <text x="156" y="778" fill="#475569" font-family="'Segoe UI', Arial, sans-serif" font-size="17">Edit → inspect status → stage intentionally → review diff → commit with a clear message</text>
+  </g>
+</svg>

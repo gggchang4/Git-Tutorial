@@ -63,7 +63,7 @@
 ## 🧩 四个 Part 怎么配合
 
 <div align="center">
-  <img src="./assets/images/readme-parts.svg" alt="Four parts overview" width="100%" />
+  <img src="./assets/images/readme-parts-overview.svg" alt="Four parts overview" width="100%" />
 </div>
 
 ### Part 1 · 学会
